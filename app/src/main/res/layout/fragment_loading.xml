@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@android:color/white"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <com.cool.photoalbum.ui.custom.LoadingView
+        android:layout_width="40dp"
+        android:layout_gravity="center"
+        android:layout_height="40dp"></com.cool.photoalbum.ui.custom.LoadingView>
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="玩命加载中.."
+        android:textSize="16sp"
+        android:textColor="@color/colorPrimaryDark"
+        ></TextView>
+
+</LinearLayout>

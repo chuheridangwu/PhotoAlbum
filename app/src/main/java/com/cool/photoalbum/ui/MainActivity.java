@@ -1,8 +1,10 @@
-package com.cool.photoalbum;
+package com.cool.photoalbum.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.cool.photoalbum.R;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import com.cool.photoalbum.R;
@@ -35,6 +36,11 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        //透明状态栏
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        //透明导航栏
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+
         mNavigationView = findViewById(R.id.main_navigation);
         mHomeFragment = new HomeFragment();
         mCategoryFragment = new CategoryFragment();

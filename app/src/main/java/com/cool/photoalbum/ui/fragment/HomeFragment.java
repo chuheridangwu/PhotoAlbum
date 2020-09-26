@@ -1,6 +1,7 @@
 package com.cool.photoalbum.ui.fragment;
 
 import android.view.View;
+import android.view.WindowManager;
 
 import com.cool.photoalbum.R;
 import com.cool.photoalbum.base.BaseFragment;

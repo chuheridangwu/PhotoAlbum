@@ -1,16 +1,14 @@
 package com.cool.photoalbum.ui.activity;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.os.Bundle;
+
 import android.view.MenuItem;
-import android.view.View;
-import android.view.WindowManager;
-import android.widget.FrameLayout;
+
 
 import com.cool.photoalbum.R;
 import com.cool.photoalbum.base.BaseActivity;
@@ -36,10 +34,6 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-//        //透明状态栏
-//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//        //透明导航栏
-//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
 
         mNavigationView = findViewById(R.id.main_navigation);
         mHomeFragment = new HomeFragment();
@@ -91,5 +85,7 @@ public class MainActivity extends BaseActivity {
         lastFragment = fragment;
 
         transaction.commit();
+//        设置是否是全屏
+//        getWindow().addFlags((fragment instanceof HomeFragment) ? WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS : WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 }

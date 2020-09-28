@@ -74,13 +74,13 @@ public class MainActivity extends BaseActivity {
     private Fragment lastFragment;
     private void switchFragment(Fragment fragment) {
         FragmentTransaction transaction = mFm.beginTransaction();
+        if (lastFragment != null){
+            transaction.hide(lastFragment);
+        }
         if (fragment.isAdded()){
             transaction.show(fragment);
         }else {
             transaction.add(R.id.base_container,fragment);
-        }
-        if (lastFragment != null){
-            transaction.hide(lastFragment);
         }
         lastFragment = fragment;
 

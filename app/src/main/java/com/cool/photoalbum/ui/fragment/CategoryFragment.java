@@ -35,6 +35,7 @@ public class CategoryFragment extends BaseFragment {
         mAdapter = new CategoryAdapter();
         mRecyclerView.setAdapter(mAdapter);
 
+        mAdapter.setAnimationEnable(true);
         mAdapter.addChildClickViewIds(R.id.category_item_img);
         mAdapter.setOnItemChildClickListener(new OnItemChildClickListener() {
             @Override

@@ -1,30 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:gravity="center"
+<RelativeLayout
     android:orientation="horizontal"
     android:background="@color/colorPrimaryDark"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="40dp">
 
-    <View
-        android:layout_width="10dp"
-        android:layout_height="3dp"
-        android:background="@drawable/shape_nav_title_flg"></View>
 
-    <TextView
-        android:id="@+id/nav_title_view"
+    <ImageView
+        android:visibility="gone"
+        android:paddingLeft="15dp"
+        android:layout_centerVertical="true"
+        android:id="@+id/nav_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="分类"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="@android:color/white"></TextView>
+        android:src="@mipmap/back"></ImageView>
 
-    <View
-        android:layout_width="10dp"
-        android:layout_height="3dp"
-        android:background="@drawable/shape_nav_title_flg"></View>
-</LinearLayout>
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        >
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="3dp"
+            android:background="@drawable/shape_nav_title_flg"></View>
+
+        <TextView
+            android:id="@+id/nav_title_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="分类"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"></TextView>
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="3dp"
+            android:background="@drawable/shape_nav_title_flg"></View>
+    </LinearLayout>
+
+</RelativeLayout>

@@ -25,13 +25,13 @@ public class DataServer {
         list.add(category0);
         list.add(category1);
         list.add(category2);
+        list.add(category8);
         list.add(category9);
         list.add(category3);
         list.add(category4);
         list.add(category5);
         list.add(category6);
         list.add(category7);
-        list.add(category8);
         return list;
     }
 }

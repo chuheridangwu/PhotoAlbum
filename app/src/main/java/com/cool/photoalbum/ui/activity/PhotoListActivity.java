@@ -4,6 +4,7 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -101,6 +102,16 @@ public class PhotoListActivity extends BaseActivity implements IPhotoListCallbac
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 int categoryId = getIntent().getIntExtra(Constants.KEY_PHOTO_PAGER_CATEGORY_ID,1);
                 mListPresenter.loaderMore(categoryId);
+            }
+        });
+
+        // 返回上一个界面
+        ImageView backView = findViewById(R.id.nav_back);
+        backView.setVisibility(View.VISIBLE);
+        backView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }

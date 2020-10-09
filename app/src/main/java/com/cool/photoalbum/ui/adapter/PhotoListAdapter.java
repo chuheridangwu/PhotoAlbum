@@ -4,13 +4,14 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cool.photoalbum.R;
 import com.cool.photoalbum.model.domain.PhotoList;
 
 import org.jetbrains.annotations.NotNull;
 
-public class PhotoListAdapter extends BaseQuickAdapter<PhotoList.FeedsBean, BaseViewHolder> {
+public class PhotoListAdapter extends BaseQuickAdapter<PhotoList.FeedsBean, BaseViewHolder>{
 
     public PhotoListAdapter(){
         super(R.layout.item_photo_list_view);

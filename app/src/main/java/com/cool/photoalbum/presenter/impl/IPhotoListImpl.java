@@ -31,6 +31,9 @@ public class IPhotoListImpl implements IPhotoListPresenter {
     @Override
     public void getCategoryContent(int categoryId) {
 
+        // 因为使用的是单利，所以每次的时候进行初始化一次
+        mCurrentCount = DEFAULT_COUNT;
+
         if (mViewCallback != null) {
             mViewCallback.onLoading();
         }
@@ -45,7 +48,7 @@ public class IPhotoListImpl implements IPhotoListPresenter {
                 int code = response.code();
                 if (code == HttpURLConnection.HTTP_OK){
                     PhotoList list = response.body();
-                    if (mViewCallback != null) {
+                    if (mViewCallback != null && list.getFeeds() != null) {
                         mViewCallback.onContentLoaded(list);
                     }
                 }else {
@@ -72,7 +75,7 @@ public class IPhotoListImpl implements IPhotoListPresenter {
         params.put("channel",String.valueOf(categoryId));
         params.put("count",String.valueOf(mCurrentCount));
         params.put("device",String.valueOf(2));
-        params.put("start",String.valueOf(0));
+        params.put("start",String.valueOf(mCurrentCount-20));
         params.put("version",String.valueOf(1));
         return params;
     }
@@ -90,7 +93,7 @@ public class IPhotoListImpl implements IPhotoListPresenter {
                 if (code == HttpURLConnection.HTTP_OK){
                     PhotoList list = response.body();
                     if (mViewCallback != null) {
-                        if (list.getFeeds().size() > 0){
+                        if (list.getFeeds() != null && list.getFeeds().size() > 0){
                             mViewCallback.onLoadMoreLoaded(list);
                         }else {
                             mViewCallback.onLoadMoreEmpty();

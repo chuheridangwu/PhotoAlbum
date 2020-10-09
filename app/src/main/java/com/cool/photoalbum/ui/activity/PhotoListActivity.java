@@ -1,6 +1,7 @@
 package com.cool.photoalbum.ui.activity;
 
 import android.graphics.Rect;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -18,16 +19,22 @@ import com.cool.photoalbum.base.BaseActivity;
 import com.cool.photoalbum.model.domain.PhotoList;
 import com.cool.photoalbum.presenter.IPhotoListPresenter;
 import com.cool.photoalbum.ui.adapter.PhotoListAdapter;
+import com.cool.photoalbum.utils.Constants;
 import com.cool.photoalbum.utils.PresentManager;
 import com.cool.photoalbum.utils.SizeUtils;
 import com.cool.photoalbum.utils.ToastUtils;
 import com.cool.photoalbum.viewCallback.IPhotoListCallback;
+import com.scwang.smart.refresh.footer.ClassicsFooter;
+import com.scwang.smart.refresh.layout.SmartRefreshLayout;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 
 public class PhotoListActivity extends BaseActivity implements IPhotoListCallback {
     private RecyclerView mList_recycler_view;
     private IPhotoListPresenter mListPresenter;
     private TextView mTitleView;
     private PhotoListAdapter mAdapter;
+    private SmartRefreshLayout mSmartRefresh;
 
     @Override
     public int getLayoutResId() {
@@ -38,26 +45,27 @@ public class PhotoListActivity extends BaseActivity implements IPhotoListCallbac
     protected void initView() {
         GridLayoutManager manager = new GridLayoutManager(this,3);
         manager.offsetChildrenVertical(5);
-        manager.offsetChildrenHorizontal(10);
+        manager.offsetChildrenHorizontal(5);
 
         mList_recycler_view = findViewById(R.id.photo_list_recycler);
         mList_recycler_view.setLayoutManager(manager);
 
         mAdapter = new PhotoListAdapter();
+        mAdapter.setAnimationEnable(true);
         mList_recycler_view.setAdapter(mAdapter);
         mList_recycler_view.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
             public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
                 super.getItemOffsets(outRect, view, parent, state);
-
-                // 是否是中间的view
-                boolean  isCenterChild = parent.getChildAdapterPosition(view) %3 == 1;
-
-                outRect.left = SizeUtils.dip2px(getApplicationContext(),5);
-                outRect.right = SizeUtils.dip2px(getApplicationContext(),5);
-                outRect.bottom = SizeUtils.dip2px(getApplicationContext(),5);
+                outRect.left = SizeUtils.dip2px(getApplicationContext(),3);
+                outRect.right = SizeUtils.dip2px(getApplicationContext(),3);
+                outRect.bottom = SizeUtils.dip2px(getApplicationContext(),3);
             }
         });
+
+        // 刷新
+        mSmartRefresh = findViewById(R.id.photo_list_refresh);
+
 
         mTitleView = findViewById(R.id.nav_title_view);
         mTitleView.setText("图片");
@@ -74,6 +82,8 @@ public class PhotoListActivity extends BaseActivity implements IPhotoListCallbac
     protected void initPresenter() {
         mListPresenter = PresentManager.getInstance().getmIPhotoListPresenter();
         mListPresenter.registerViewCallback(this);
+
+        mSmartRefresh.setRefreshFooter(new ClassicsFooter(this));
     }
 
     @Override
@@ -85,27 +95,44 @@ public class PhotoListActivity extends BaseActivity implements IPhotoListCallbac
 
             }
         });
+
+        mSmartRefresh.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                int categoryId = getIntent().getIntExtra(Constants.KEY_PHOTO_PAGER_CATEGORY_ID,1);
+                mListPresenter.loaderMore(categoryId);
+            }
+        });
     }
 
     @Override
     public void onLoadMoreError() {
+        if (mSmartRefresh != null) {
+            mSmartRefresh.finishLoadMore();
+        }
         ToastUtils.showToast("加载更多失败");
     }
 
     @Override
     public void onLoadMoreEmpty() {
+        if (mSmartRefresh != null) {
+            mSmartRefresh.finishLoadMore();
+        }
         ToastUtils.showToast("没有更多数据了");
     }
 
     @Override
     public void onLoadMoreLoaded(PhotoList contents) {
+        if (mSmartRefresh != null) {
+            mSmartRefresh.finishLoadMore();
+        }
         mAdapter.addData(contents.getFeeds());
     }
 
     @Override
     public void onContentLoaded(PhotoList contents) {
         Log.d("TAG", "onContentLoaded: " + contents.getFeeds().toString());
-        mAdapter.addData(contents.getFeeds());
+        mAdapter.setList(contents.getFeeds());
     }
 
     @Override

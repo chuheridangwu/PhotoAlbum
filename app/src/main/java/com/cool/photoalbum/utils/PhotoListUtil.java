@@ -13,7 +13,8 @@ public class PhotoListUtil {
         int categoryId = category.getChannel();
         IPhotoListPresenter photoListPresent = PresentManager.getInstance().getmIPhotoListPresenter();
         photoListPresent.getCategoryContent(categoryId);
-        context.startActivity(new Intent(context, PhotoListActivity.class));
-
+        Intent intent = new Intent(context,PhotoListActivity.class);
+        intent.putExtra(Constants.KEY_PHOTO_PAGER_CATEGORY_ID,categoryId);
+        context.startActivity(intent);
     }
 }

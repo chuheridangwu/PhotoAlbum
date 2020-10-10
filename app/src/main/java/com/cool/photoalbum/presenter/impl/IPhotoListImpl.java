@@ -73,7 +73,7 @@ public class IPhotoListImpl implements IPhotoListPresenter {
     private Map<String, String> createParams(int categoryId) {
         Map<String,String> params = new HashMap<>();
         params.put("channel",String.valueOf(categoryId));
-        params.put("count",String.valueOf(mCurrentCount));
+        params.put("count",String.valueOf(20));
         params.put("device",String.valueOf(2));
         params.put("start",String.valueOf(mCurrentCount-20));
         params.put("version",String.valueOf(1));

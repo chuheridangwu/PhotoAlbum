@@ -30,6 +30,7 @@ public class PushActivityUtil {
         Intent intent = new Intent(context, BrowseActivity.class);
         intent.putParcelableArrayListExtra(Constants.KEY_FEED_BEAN_LIST,new ArrayList<PhotoList.FeedsBean>(photos));
         intent.putExtra(Constants.KEY_FEED_BEAN_LIST_INDEX,index);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 }

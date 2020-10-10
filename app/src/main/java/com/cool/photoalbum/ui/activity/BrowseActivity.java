@@ -1,40 +1,35 @@
 package com.cool.photoalbum.ui.activity;
 
+import android.Manifest;
 import android.content.Intent;
-import android.content.res.AssetManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.AsyncTask;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Message;
-import android.provider.MediaStore;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.PagerSnapHelper;
-import androidx.recyclerview.widget.RecyclerView;
+import android.widget.Toast;
 
 import com.cool.photoalbum.R;
 import com.cool.photoalbum.model.domain.PhotoList;
 import com.cool.photoalbum.ui.adapter.BrowseAdapter;
 import com.cool.photoalbum.utils.Constants;
+import com.cool.photoalbum.utils.DonwloadSaveImg;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
+import androidx.recyclerview.widget.RecyclerView;
+
 public class BrowseActivity extends AppCompatActivity {
+
+    private static int REQUEST_PERMISSION_CODE = 1;
 
     private RecyclerView mRecyclerView;
     private BrowseAdapter mAdapter;
@@ -79,27 +74,33 @@ public class BrowseActivity extends AppCompatActivity {
         mIconShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int position = ((LinearLayoutManager)mRecyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+                PhotoList.FeedsBean bean = mAdapter.getData().get(position);
 
+                // 调用系统分享
+
+                /** * 分享图片 */
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("image/png");
+                try {
+                    URL url = new URL(bean.getImage_large());
+                    intent.putExtra(Intent.EXTRA_STREAM, url.toURI());
+                } catch (MalformedURLException | URISyntaxException e) {
+                    e.printStackTrace();
+                }
+                startActivity(Intent.createChooser(intent,"title"));
             }
         });
 
         mIconDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int postion = ((LinearLayoutManager)mRecyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
-                PhotoList.FeedsBean bean = mAdapter.getData().get(postion);
+                int position = ((LinearLayoutManager)mRecyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+                PhotoList.FeedsBean bean = mAdapter.getData().get(position);
+                checkPermission();
 
-                // 调用系统分享
+                DonwloadSaveImg.donwloadImg(BrowseActivity.this,bean.getImage_large());//iPath
 
-                /** * 分享图片 */
-                Bitmap bgimg0 = getImageFromAssetsFile(bean.getImage_large());
-                Intent share_intent = new Intent();
-                share_intent.setAction(Intent.ACTION_SEND);//设置分享行为
-                share_intent.setType("*/*");  //设置分享内容的类型
-                share_intent.putExtra(Intent.EXTRA_STREAM, saveBitmap(bgimg0,"img"));
-                //创建分享的Dialog
-                share_intent = Intent.createChooser(share_intent, "dialogTitle");
-                startActivity(share_intent);
             }
         });
 
@@ -126,38 +127,21 @@ public class BrowseActivity extends AppCompatActivity {
         mAdapter.setList(list1);
     }
 
-    /** * 从Assets中读取图片 */
-    private Bitmap getImageFromAssetsFile(String fileName){
-        Bitmap image = null;
-        AssetManager am = getResources().getAssets();
-        try {
-            InputStream is=am.open(fileName);
-            image=BitmapFactory.decodeStream(is);
-            is.close();
-        } catch (IOException e) {
-            e.printStackTrace();    }
-        return image;
-    }
 
-    /** * 将图片存到本地 */
-    private static Uri saveBitmap(Bitmap bm, String picName) {
-        try {
-            String dir= Environment.getExternalStorageDirectory().getAbsolutePath()+"/renji/"+picName+".jpg";
-            File f = new File(dir);
-            if (!f.exists()) {
-                f.getParentFile().mkdirs();
-                f.createNewFile();
+    // 获取相册权限
+    private void checkPermission() {
+        //检查权限（NEED_PERMISSION）是否被授权 PackageManager.PERMISSION_GRANTED表示同意授权
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            //用户已经拒绝过一次，再次弹出权限申请对话框需要给用户一个解释
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission
+                    .WRITE_EXTERNAL_STORAGE)) {
+                Toast.makeText(this, "请开通相关权限，否则无法正常使用本应用！", Toast.LENGTH_SHORT).show();
             }
-            FileOutputStream out = new FileOutputStream(f);
-            bm.compress(Bitmap.CompressFormat.PNG, 90, out);
-            out.flush();
-            out.close();
-            Uri uri = Uri.fromFile(f);
-            return uri;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();    }
-        return null;
+            //申请权限
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_PERMISSION_CODE);
+        } else {
+            Toast.makeText(this, "授权成功！", Toast.LENGTH_SHORT).show();
+        }
     }
 }

@@ -114,6 +114,16 @@ public class PhotoListActivity extends BaseActivity implements IPhotoListCallbac
                 finish();
             }
         });
+
+        // 返回顶部
+        ImageView topArrow = findViewById(R.id.photo_list_top_arrow);
+        topArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mList_recycler_view.smoothScrollToPosition(0);
+            }
+        });
+
     }
 
     @Override

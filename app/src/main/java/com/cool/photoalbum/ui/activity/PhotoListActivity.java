@@ -22,6 +22,7 @@ import com.cool.photoalbum.presenter.IPhotoListPresenter;
 import com.cool.photoalbum.ui.adapter.PhotoListAdapter;
 import com.cool.photoalbum.utils.Constants;
 import com.cool.photoalbum.utils.PresentManager;
+import com.cool.photoalbum.utils.PushActivityUtil;
 import com.cool.photoalbum.utils.SizeUtils;
 import com.cool.photoalbum.utils.ToastUtils;
 import com.cool.photoalbum.viewCallback.IPhotoListCallback;
@@ -93,7 +94,7 @@ public class PhotoListActivity extends BaseActivity implements IPhotoListCallbac
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
-
+                PushActivityUtil.toBrowseActivity(getApplicationContext(),mAdapter.getData(),position);
             }
         });
 
@@ -123,8 +124,6 @@ public class PhotoListActivity extends BaseActivity implements IPhotoListCallbac
                 mList_recycler_view.smoothScrollToPosition(0);
             }
         });
-
-        // 点击单个的图片
     }
 
     @Override

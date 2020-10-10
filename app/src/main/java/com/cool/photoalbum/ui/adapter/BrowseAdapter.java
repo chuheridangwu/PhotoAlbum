@@ -15,7 +15,7 @@ public class BrowseAdapter extends BaseQuickAdapter<PhotoList.FeedsBean, BaseVie
     }
     @Override
     protected void convert(@NotNull BaseViewHolder baseViewHolder, PhotoList.FeedsBean feedsBean) {
-        PhotoView view = (PhotoView)baseViewHolder.getView(R.layout.item_browse_view);
+        PhotoView view = (PhotoView)baseViewHolder.getView(R.id.browse_item_photo_view);
         Glide.with(getContext()).load(feedsBean.getImage_large()).into(view);
     }
 }

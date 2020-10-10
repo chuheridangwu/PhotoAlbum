@@ -124,7 +124,9 @@ public class BrowseActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         ArrayList<PhotoList.FeedsBean> list1 = intent.getParcelableArrayListExtra(Constants.KEY_FEED_BEAN_LIST);
+        int position = intent.getIntExtra(Constants.KEY_FEED_BEAN_LIST_POSITION,0);
         mAdapter.setList(list1);
+        mRecyclerView.scrollToPosition(position);
     }
 
 

@@ -12,4 +12,43 @@
         app:layout_constraintTop_toTopOf="parent"
         ></androidx.recyclerview.widget.RecyclerView>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginBottom="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/back"
+            android:id="@+id/browse_icon_back"
+            android:layout_weight="1"
+            ></ImageView>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/browse_like_normal"
+            android:id="@+id/browse_icon_like_img"
+            android:layout_weight="1"
+            ></ImageView>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/browse_share"
+            android:id="@+id/browse_icon_share"
+            android:layout_weight="1"
+            ></ImageView>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/browse_download"
+            android:id="@+id/browse_icon_download"
+            android:layout_weight="1"
+            ></ImageView>
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

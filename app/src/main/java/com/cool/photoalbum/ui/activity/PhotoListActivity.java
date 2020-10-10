@@ -124,6 +124,7 @@ public class PhotoListActivity extends BaseActivity implements IPhotoListCallbac
             }
         });
 
+        // 点击单个的图片
     }
 
     @Override

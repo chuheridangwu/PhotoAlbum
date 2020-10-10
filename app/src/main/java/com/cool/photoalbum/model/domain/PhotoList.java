@@ -1,5 +1,8 @@
 package com.cool.photoalbum.model.domain;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -31,7 +34,7 @@ public class PhotoList {
         this.feeds = feeds;
     }
 
-    public static class FeedsBean {
+    public static class FeedsBean implements Parcelable {
         /**
          * fid : 5634
          * image_large : http://cdn5.ziti2.com/papers/d76/ee7/c4dcfb2472949964cb1d1b76cf.jpg
@@ -119,5 +122,46 @@ public class PhotoList {
                     ", favored='" + favored + '\'' +
                     '}';
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.fid);
+            dest.writeString(this.image_large);
+            dest.writeString(this.image_thumb);
+            dest.writeString(this.image_width);
+            dest.writeString(this.image_height);
+            dest.writeString(this._$DCreateTs24);
+            dest.writeString(this.favored);
+        }
+
+        public FeedsBean() {
+        }
+
+        protected FeedsBean(Parcel in) {
+            this.fid = in.readString();
+            this.image_large = in.readString();
+            this.image_thumb = in.readString();
+            this.image_width = in.readString();
+            this.image_height = in.readString();
+            this._$DCreateTs24 = in.readString();
+            this.favored = in.readString();
+        }
+
+        public static final Parcelable.Creator<FeedsBean> CREATOR = new Parcelable.Creator<FeedsBean>() {
+            @Override
+            public FeedsBean createFromParcel(Parcel source) {
+                return new FeedsBean(source);
+            }
+
+            @Override
+            public FeedsBean[] newArray(int size) {
+                return new FeedsBean[size];
+            }
+        };
     }
 }

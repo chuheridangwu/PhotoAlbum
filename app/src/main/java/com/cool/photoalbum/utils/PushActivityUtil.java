@@ -22,11 +22,12 @@ public class PushActivityUtil {
         context.startActivity(intent);
     }
 
-    public static void toBrowseActivity(Context context, List<PhotoList.FeedsBean> photos, int index){
+    public static void toBrowseActivity(Context context, List<PhotoList.FeedsBean> photos, int index, int categoryId){
         Intent intent = new Intent(context, BrowseActivity.class);
         intent.putParcelableArrayListExtra(Constants.KEY_FEED_BEAN_LIST,new ArrayList<PhotoList.FeedsBean>(photos));
         intent.putExtra(Constants.KEY_FEED_BEAN_LIST_POSITION,index);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra(Constants.KEY_FEED_BEAN_LIST_CATEGORY_ID,categoryId);
         context.startActivity(intent);
     }
 }

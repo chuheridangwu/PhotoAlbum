@@ -4,22 +4,30 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.cool.photoalbum.R;
 import com.cool.photoalbum.model.domain.PhotoList;
+import com.cool.photoalbum.presenter.IPhotoListPresenter;
+import com.cool.photoalbum.presenter.impl.IPhotoListImpl;
 import com.cool.photoalbum.ui.adapter.BrowseAdapter;
 import com.cool.photoalbum.utils.Constants;
 import com.cool.photoalbum.utils.DonwloadSaveImg;
+import com.cool.photoalbum.utils.PresentManager;
+import com.cool.photoalbum.utils.ToastUtils;
+import com.cool.photoalbum.viewCallback.IPhotoListCallback;
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -27,16 +35,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class BrowseActivity extends AppCompatActivity {
+public class BrowseActivity extends AppCompatActivity implements IPhotoListCallback {
 
     private static int REQUEST_PERMISSION_CODE = 1;
 
     private RecyclerView mRecyclerView;
     private BrowseAdapter mAdapter;
     private View mIconBack;
-    private View mIconLike;
+    private ImageView mIconLike;
     private View mIconShare;
     private View mIconDownload;
+    private ArrayList<PhotoList.FeedsBean> mDataList;
+
+    private IPhotoListPresenter mListPresenter;
+    private int mCategoryId;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,7 +61,28 @@ public class BrowseActivity extends AppCompatActivity {
 
         initView();
 
+        initPresenter();
+
         initEvent();
+    }
+
+    private void initPresenter() {
+
+        mListPresenter = new  IPhotoListImpl();
+        mListPresenter.registerViewCallback(this);
+
+        // 滚动到对应位置时加载数据
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                // 最后一个即将显示的视图位置
+                int lastPosition = ((LinearLayoutManager)recyclerView.getLayoutManager()).findLastVisibleItemPosition();
+                if (newState == RecyclerView.SCROLL_STATE_IDLE && lastPosition >= mDataList.size() - 5){ //当停止滚动时
+                    mListPresenter.loaderMore(mCategoryId);
+                }
+            }
+        });
     }
 
     private void initEvent() {
@@ -68,6 +102,7 @@ public class BrowseActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mIconLike.setBackgroundResource(R.mipmap.browse_like_selecte);
+                mIconLike.setScaleType(ImageView.ScaleType.FIT_CENTER);
             }
         });
 
@@ -123,9 +158,10 @@ public class BrowseActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
 
         Intent intent = getIntent();
-        ArrayList<PhotoList.FeedsBean> list1 = intent.getParcelableArrayListExtra(Constants.KEY_FEED_BEAN_LIST);
+        mDataList = intent.getParcelableArrayListExtra(Constants.KEY_FEED_BEAN_LIST);
+        mCategoryId = intent.getIntExtra(Constants.KEY_FEED_BEAN_LIST_CATEGORY_ID,0);
         int position = intent.getIntExtra(Constants.KEY_FEED_BEAN_LIST_POSITION,0);
-        mAdapter.setList(list1);
+        mAdapter.setList(mDataList);
         mRecyclerView.scrollToPosition(position);
     }
 
@@ -145,5 +181,54 @@ public class BrowseActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "授权成功！", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mListPresenter != null) {
+            mListPresenter.unregisterViewCallback(this);
+        }
+    }
+
+    @Override
+    public void onLoadMoreError() {
+
+    }
+
+    @Override
+    public void onLoadMoreEmpty() {
+        ToastUtils.showToast("没有更多数据了");
+    }
+
+    @Override
+    public void onLoadMoreLoaded(PhotoList contents) {
+        mDataList.addAll(contents.getFeeds());
+        mAdapter.addData(contents.getFeeds());
+    }
+
+    @Override
+    public void onContentLoaded(PhotoList contents) {
+
+    }
+
+    @Override
+    public int getStartPosition() {
+        return mDataList.size();
+    }
+
+    @Override
+    public void onError() {
+
+    }
+
+    @Override
+    public void onLoading() {
+
+    }
+
+    @Override
+    public void onEmpty() {
+
     }
 }

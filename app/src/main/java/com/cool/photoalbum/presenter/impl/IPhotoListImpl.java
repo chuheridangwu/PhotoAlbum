@@ -1,7 +1,5 @@
 package com.cool.photoalbum.presenter.impl;
 
-import android.util.Log;
-
 import com.cool.photoalbum.model.Api;
 import com.cool.photoalbum.model.domain.PhotoList;
 import com.cool.photoalbum.presenter.IPhotoListPresenter;
@@ -11,11 +9,9 @@ import com.cool.photoalbum.viewCallback.IPhotoListCallback;
 import org.jetbrains.annotations.NotNull;
 
 import java.net.HttpURLConnection;
-import java.security.PublicKey;
 import java.util.HashMap;
 import java.util.Map;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -82,6 +78,9 @@ public class IPhotoListImpl implements IPhotoListPresenter {
 
     @Override
     public void loaderMore(int categoryId) {
+        if (mViewCallback.getStartPosition() != 0){
+            mCurrentCount = mViewCallback.getStartPosition();
+        }
         mCurrentCount += DEFAULT_COUNT;
         Retrofit retrofit = RetrofitManager.getInstance().getRetrofit();
         Api api = retrofit.create(Api.class);

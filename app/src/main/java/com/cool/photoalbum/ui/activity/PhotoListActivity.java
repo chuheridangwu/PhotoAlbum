@@ -94,7 +94,8 @@ public class PhotoListActivity extends BaseActivity implements IPhotoListCallbac
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
-                PushActivityUtil.toBrowseActivity(getApplicationContext(),mAdapter.getData(),position);
+                int categoryId = getIntent().getIntExtra(Constants.KEY_PHOTO_PAGER_CATEGORY_ID,1);
+                PushActivityUtil.toBrowseActivity(getApplicationContext(),mAdapter.getData(),position,categoryId);
             }
         });
 
@@ -154,6 +155,11 @@ public class PhotoListActivity extends BaseActivity implements IPhotoListCallbac
     public void onContentLoaded(PhotoList contents) {
         Log.d("TAG", "onContentLoaded: " + contents.getFeeds().toString());
         mAdapter.setList(contents.getFeeds());
+    }
+
+    @Override
+    public int getStartPosition() {
+        return 0;
     }
 
     @Override

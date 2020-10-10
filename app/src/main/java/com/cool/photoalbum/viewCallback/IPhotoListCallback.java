@@ -15,5 +15,5 @@ public interface IPhotoListCallback extends IBaseCallback {
 
     void onContentLoaded(PhotoList contents);
 
-
+    int getStartPosition();
 }

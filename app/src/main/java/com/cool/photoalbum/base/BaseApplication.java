@@ -2,6 +2,7 @@ package com.cool.photoalbum.base;
 import android.app.Application;
 import android.content.Context;
 
+import com.cool.photoalbum.utils.AppAccessRequest;
 import com.google.android.gms.ads.MobileAds;
 
 public class BaseApplication extends Application {
@@ -13,6 +14,7 @@ public class BaseApplication extends Application {
         super.onCreate();
         appContext = getBaseContext();
         MobileAds.initialize(this);
+        AppAccessRequest.getAppAccess();
     }
 
     public static Context getAppContext(){

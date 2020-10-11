@@ -14,6 +14,6 @@ public interface Api {
     @GET("public_time_line.php")
     Call<PhotoList> getCategoryContent(@QueryMap Map<String,String> params);
 
-    @GET()
-    Call<Response> getCategoryTest(@QueryMap Map<String,String> params);
+    @GET("JsonData/master/json.txt")
+    Call<ResponseBody> getAppAccess();
 }

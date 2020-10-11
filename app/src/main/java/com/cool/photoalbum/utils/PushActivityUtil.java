@@ -2,10 +2,13 @@ package com.cool.photoalbum.utils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
 
 import com.cool.photoalbum.model.domain.Category;
+import com.cool.photoalbum.model.domain.IBasePhotoInfo;
 import com.cool.photoalbum.model.domain.PhotoList;
 import com.cool.photoalbum.presenter.IPhotoListPresenter;
+import com.cool.photoalbum.presenter.ISearchPresenter;
 import com.cool.photoalbum.ui.activity.BrowseActivity;
 import com.cool.photoalbum.ui.activity.PhotoListActivity;
 
@@ -22,12 +25,20 @@ public class PushActivityUtil {
         context.startActivity(intent);
     }
 
-    public static void toBrowseActivity(Context context, List<PhotoList.FeedsBean> photos, int index, int categoryId){
+    public static void toBrowseActivity(Context context, List<IBasePhotoInfo> photos, int index, int categoryId){
         Intent intent = new Intent(context, BrowseActivity.class);
-        intent.putParcelableArrayListExtra(Constants.KEY_FEED_BEAN_LIST,new ArrayList<PhotoList.FeedsBean>(photos));
+        intent.putParcelableArrayListExtra(Constants.KEY_FEED_BEAN_LIST, (ArrayList<? extends Parcelable>) new ArrayList<IBasePhotoInfo>(photos));
         intent.putExtra(Constants.KEY_FEED_BEAN_LIST_POSITION,index);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra(Constants.KEY_FEED_BEAN_LIST_CATEGORY_ID,categoryId);
+        context.startActivity(intent);
+    }
+
+    public static void homeToPhotoListPage(Context context,String keyboard){
+        ISearchPresenter photoListPresent = PresentManager.getInstance().getmSearchPresenter();
+        photoListPresent.getSearchResult(keyboard);
+        Intent intent = new Intent(context,PhotoListActivity.class);
+        intent.putExtra(Constants.KEY_PHOTO_PAGER_KEYBOARD,keyboard);
         context.startActivity(intent);
     }
 }

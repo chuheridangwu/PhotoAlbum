@@ -18,7 +18,9 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.cool.photoalbum.R;
 import com.cool.photoalbum.base.BaseActivity;
 import com.cool.photoalbum.model.domain.PhotoList;
+import com.cool.photoalbum.model.domain.SearchResult;
 import com.cool.photoalbum.presenter.IPhotoListPresenter;
+import com.cool.photoalbum.presenter.ISearchPresenter;
 import com.cool.photoalbum.ui.adapter.PhotoListAdapter;
 import com.cool.photoalbum.utils.Constants;
 import com.cool.photoalbum.utils.PresentManager;
@@ -26,17 +28,19 @@ import com.cool.photoalbum.utils.PushActivityUtil;
 import com.cool.photoalbum.utils.SizeUtils;
 import com.cool.photoalbum.utils.ToastUtils;
 import com.cool.photoalbum.viewCallback.IPhotoListCallback;
+import com.cool.photoalbum.viewCallback.ISearchViewCallback;
 import com.scwang.smart.refresh.footer.ClassicsFooter;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 
-public class PhotoListActivity extends BaseActivity implements IPhotoListCallback {
+public class PhotoListActivity extends BaseActivity implements IPhotoListCallback, ISearchViewCallback {
     private RecyclerView mList_recycler_view;
     private IPhotoListPresenter mListPresenter;
     private TextView mTitleView;
     private PhotoListAdapter mAdapter;
     private SmartRefreshLayout mSmartRefresh;
+    private ISearchPresenter mSearchPresenter;
 
     @Override
     public int getLayoutResId() {
@@ -78,12 +82,19 @@ public class PhotoListActivity extends BaseActivity implements IPhotoListCallbac
         if (mListPresenter != null) {
             mListPresenter.unregisterViewCallback(this);
         }
+
+        if (mSearchPresenter != null) {
+            mSearchPresenter.unregisterViewCallback(this);
+        }
     }
 
     @Override
     protected void initPresenter() {
         mListPresenter = PresentManager.getInstance().getmIPhotoListPresenter();
         mListPresenter.registerViewCallback(this);
+
+        mSearchPresenter = PresentManager.getInstance().getmSearchPresenter();
+        mSearchPresenter.registerViewCallback(this);
 
         mSmartRefresh.setRefreshFooter(new ClassicsFooter(this));
     }
@@ -155,6 +166,19 @@ public class PhotoListActivity extends BaseActivity implements IPhotoListCallbac
     public void onContentLoaded(PhotoList contents) {
         Log.d("TAG", "onContentLoaded: " + contents.getFeeds().toString());
         mAdapter.setList(contents.getFeeds());
+    }
+
+    @Override
+    public void onLoadMoreLoaded(SearchResult contents) {
+        if (mSmartRefresh != null) {
+            mSmartRefresh.finishLoadMore();
+        }
+        mAdapter.addData(contents.getItems());
+    }
+
+    @Override
+    public void onContentLoaded(SearchResult contents) {
+        mAdapter.setList(contents.getItems());
     }
 
     @Override

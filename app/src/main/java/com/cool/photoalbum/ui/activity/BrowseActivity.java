@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.cool.photoalbum.R;
+import com.cool.photoalbum.model.domain.IBasePhotoInfo;
 import com.cool.photoalbum.model.domain.PhotoList;
 import com.cool.photoalbum.presenter.IPhotoListPresenter;
 import com.cool.photoalbum.presenter.impl.IPhotoListImpl;
@@ -45,7 +46,7 @@ public class BrowseActivity extends AppCompatActivity implements IPhotoListCallb
     private ImageView mIconLike;
     private View mIconShare;
     private View mIconDownload;
-    private ArrayList<PhotoList.FeedsBean> mDataList;
+    private ArrayList<IBasePhotoInfo> mDataList;
 
     private IPhotoListPresenter mListPresenter;
     private int mCategoryId;
@@ -110,7 +111,7 @@ public class BrowseActivity extends AppCompatActivity implements IPhotoListCallb
             @Override
             public void onClick(View v) {
                 int position = ((LinearLayoutManager)mRecyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
-                PhotoList.FeedsBean bean = mAdapter.getData().get(position);
+                IBasePhotoInfo bean = mAdapter.getData().get(position);
 
                 // 调用系统分享
 
@@ -118,7 +119,7 @@ public class BrowseActivity extends AppCompatActivity implements IPhotoListCallb
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("image/png");
                 try {
-                    URL url = new URL(bean.getImage_large());
+                    URL url = new URL(bean.smallUrl());
                     intent.putExtra(Intent.EXTRA_STREAM, url.toURI());
                 } catch (MalformedURLException | URISyntaxException e) {
                     e.printStackTrace();
@@ -131,10 +132,10 @@ public class BrowseActivity extends AppCompatActivity implements IPhotoListCallb
             @Override
             public void onClick(View v) {
                 int position = ((LinearLayoutManager)mRecyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
-                PhotoList.FeedsBean bean = mAdapter.getData().get(position);
+                IBasePhotoInfo bean = mAdapter.getData().get(position);
                 checkPermission();
 
-                DonwloadSaveImg.donwloadImg(BrowseActivity.this,bean.getImage_large());//iPath
+                DonwloadSaveImg.donwloadImg(BrowseActivity.this,bean.smallUrl());//iPath
 
             }
         });

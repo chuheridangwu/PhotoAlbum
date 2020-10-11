@@ -14,14 +14,18 @@ import android.widget.Toast;
 import com.cool.photoalbum.R;
 import com.cool.photoalbum.model.domain.IBasePhotoInfo;
 import com.cool.photoalbum.model.domain.PhotoList;
+import com.cool.photoalbum.model.domain.SearchResult;
 import com.cool.photoalbum.presenter.IPhotoListPresenter;
 import com.cool.photoalbum.presenter.impl.IPhotoListImpl;
+import com.cool.photoalbum.presenter.impl.ISearchPhotoImpl;
 import com.cool.photoalbum.ui.adapter.BrowseAdapter;
 import com.cool.photoalbum.utils.Constants;
 import com.cool.photoalbum.utils.DonwloadSaveImg;
 import com.cool.photoalbum.utils.PresentManager;
+import com.cool.photoalbum.utils.PushActivityUtil;
 import com.cool.photoalbum.utils.ToastUtils;
 import com.cool.photoalbum.viewCallback.IPhotoListCallback;
+import com.cool.photoalbum.viewCallback.ISearchViewCallback;
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -36,7 +40,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class BrowseActivity extends AppCompatActivity implements IPhotoListCallback {
+public class BrowseActivity extends AppCompatActivity implements IPhotoListCallback, ISearchViewCallback {
 
     private static int REQUEST_PERMISSION_CODE = 1;
 
@@ -50,6 +54,7 @@ public class BrowseActivity extends AppCompatActivity implements IPhotoListCallb
 
     private IPhotoListPresenter mListPresenter;
     private int mCategoryId;
+    private ISearchPhotoImpl mSearchPresenter;
 
 
     @Override
@@ -72,6 +77,9 @@ public class BrowseActivity extends AppCompatActivity implements IPhotoListCallb
         mListPresenter = new  IPhotoListImpl();
         mListPresenter.registerViewCallback(this);
 
+        mSearchPresenter = new ISearchPhotoImpl();
+        mSearchPresenter.registerViewCallback(this);
+
         // 滚动到对应位置时加载数据
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -80,7 +88,12 @@ public class BrowseActivity extends AppCompatActivity implements IPhotoListCallb
                 // 最后一个即将显示的视图位置
                 int lastPosition = ((LinearLayoutManager)recyclerView.getLayoutManager()).findLastVisibleItemPosition();
                 if (newState == RecyclerView.SCROLL_STATE_IDLE && lastPosition >= mDataList.size() - 5){ //当停止滚动时
-                    mListPresenter.loaderMore(mCategoryId);
+                    if (PushActivityUtil.photoActivityType == PushActivityUtil.PhotoActivityType.PHOTO_ACTIVITY_TYPE_CATEGORY){
+                        mListPresenter.loaderMore(mCategoryId);
+                    }else {
+                        String keyboard = getIntent().getStringExtra(Constants.KEY_FEED_BEAN_LIST_KEYBOARD);
+                        mSearchPresenter.loadMoreResult(keyboard);
+                    }
                 }
             }
         });
@@ -190,6 +203,9 @@ public class BrowseActivity extends AppCompatActivity implements IPhotoListCallb
         if (mListPresenter != null) {
             mListPresenter.unregisterViewCallback(this);
         }
+        if (mSearchPresenter != null) {
+            mSearchPresenter.unregisterViewCallback(this);
+        }
     }
 
     @Override
@@ -210,6 +226,17 @@ public class BrowseActivity extends AppCompatActivity implements IPhotoListCallb
 
     @Override
     public void onContentLoaded(PhotoList contents) {
+
+    }
+
+    @Override
+    public void onLoadMoreLoaded(SearchResult contents) {
+        mDataList.addAll(contents.getItems());
+        mAdapter.addData(contents.getItems());
+    }
+
+    @Override
+    public void onContentLoaded(SearchResult contents) {
 
     }
 

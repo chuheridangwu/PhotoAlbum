@@ -106,15 +106,21 @@ public class PhotoListActivity extends BaseActivity implements IPhotoListCallbac
             @Override
             public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
                 int categoryId = getIntent().getIntExtra(Constants.KEY_PHOTO_PAGER_CATEGORY_ID,1);
-                PushActivityUtil.toBrowseActivity(getApplicationContext(),mAdapter.getData(),position,categoryId);
+                String keyboard = getIntent().getStringExtra(Constants.KEY_PHOTO_PAGER_KEYBOARD);
+                PushActivityUtil.toBrowseActivity(getApplicationContext(),mAdapter.getData(),position,categoryId,keyboard);
             }
         });
 
         mSmartRefresh.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                int categoryId = getIntent().getIntExtra(Constants.KEY_PHOTO_PAGER_CATEGORY_ID,1);
-                mListPresenter.loaderMore(categoryId);
+                if (PushActivityUtil.photoActivityType == PushActivityUtil.PhotoActivityType.PHOTO_ACTIVITY_TYPE_CATEGORY){
+                    int categoryId = getIntent().getIntExtra(Constants.KEY_PHOTO_PAGER_CATEGORY_ID,1);
+                    mListPresenter.loaderMore(categoryId);
+                }else {
+                    String keyboard = getIntent().getStringExtra(Constants.KEY_PHOTO_PAGER_KEYBOARD);
+                    mSearchPresenter.loadMoreResult(keyboard);
+                }
             }
         });
 

@@ -63,6 +63,41 @@ public class ISearchPhotoImpl implements ISearchPresenter {
     @Override
     public void loadMoreResult(String content) {
 
+        if (mViewCallback.getStartPosition() != 0){
+            mCurrentCount = mViewCallback.getStartPosition();
+        }
+
+        mCurrentCount += DEFAULT_COUNT;
+
+        Map<String, String> params = createParams(content);
+
+        Retrofit retrofit = new  Retrofit.Builder()
+                .baseUrl(Constants.BASE_SEARCH_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        Api api = retrofit.create(Api.class);
+        Call<SearchResult> task = api.getSearchResult(params);
+        task.enqueue(new Callback<SearchResult>() {
+            @Override
+            public void onResponse(Call<SearchResult> call, Response<SearchResult> response) {
+
+                int code = response.code();
+                if (code == HttpURLConnection.HTTP_OK){
+                    SearchResult result = response.body();
+                    Log.d("TAG", "onResponse: " + result.toString());
+                    if (mViewCallback != null) {
+                        mViewCallback.onLoadMoreLoaded(result);
+                    }
+                }else {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SearchResult> call, Throwable t) {
+
+            }
+        });
     }
 
     @NotNull

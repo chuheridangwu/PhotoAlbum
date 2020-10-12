@@ -40,4 +40,14 @@ public class DataServer {
 
         return list;
     }
+
+    public static  List<String> getRecommendTags(){
+        List<String> textList = new ArrayList<>();
+        textList.add("早上好");
+        textList.add("早安");
+        textList.add("唯美");
+        textList.add("情侣头像");
+        textList.add("情侣头像");
+        return  textList;
+    }
 }

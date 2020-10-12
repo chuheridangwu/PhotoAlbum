@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.cool.photoalbum.R;
 import com.cool.photoalbum.base.BaseFragment;
+import com.cool.photoalbum.model.domain.DataServer;
 import com.cool.photoalbum.ui.custom.TextFlowLayout;
 import com.cool.photoalbum.utils.PushActivityUtil;
 
@@ -22,6 +23,7 @@ public class HomeFragment extends BaseFragment {
 
     private EditText mSearchEditText;
     private View mClearEditTextBtn;
+    private TextFlowLayout mFlowLayout;
 
     @Override
     protected int getRootViewResId() {
@@ -31,14 +33,10 @@ public class HomeFragment extends BaseFragment {
     @Override
     protected void initView(View rootView) {
         setUpState(State.SUCCESS);
-        List<String> textList = new ArrayList<>();
-        textList.add("早上好");
-        textList.add("早安");
-        textList.add("唯美");
-        textList.add("情侣头像");
-        textList.add("情侣头像");
-        TextFlowLayout text = rootView.findViewById(R.id.home_flow_text_view);
-        text.setTextList(textList);
+
+        mFlowLayout = rootView.findViewById(R.id.home_flow_text_view);
+        mFlowLayout.setTextList(DataServer.getRecommendTags());
+
         mSearchEditText = rootView.findViewById(R.id.home_search_edit);
         mClearEditTextBtn = rootView.findViewById(R.id.home_search_remove);
     }
@@ -76,6 +74,14 @@ public class HomeFragment extends BaseFragment {
                     PushActivityUtil.homeToPhotoListPage(getContext(),keyword);
                 }
                 return false;
+            }
+        });
+
+        // 点击推荐按钮
+        mFlowLayout.setOnFlowTextItemClickListener(new TextFlowLayout.OnFlowTextItemClickListener() {
+            @Override
+            public void onFlowItemClick(String text) {
+                PushActivityUtil.homeToPhotoListPage(getContext(),text);
             }
         });
     }

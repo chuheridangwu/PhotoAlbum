@@ -41,7 +41,9 @@ public class JsonCacheUtil {
     // 读取
     public List<IBasePhotoInfo> getPhotos(String key){
         String json = mSharedPreferences.getString(key,null);
-
+        if (json == null) {
+            return null;
+        }
         List<IBasePhotoInfo> photos = new ArrayList<>();
 
         Type type = new TypeToken<List<HashMap>>(){}.getType();

@@ -1,5 +1,7 @@
 package com.cool.photoalbum.ui.fragment;
 
+import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -10,20 +12,32 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.cool.photoalbum.R;
 import com.cool.photoalbum.base.BaseFragment;
 import com.cool.photoalbum.model.domain.DataServer;
+import com.cool.photoalbum.ui.adapter.HomeCategoryAdapter;
 import com.cool.photoalbum.ui.custom.TextFlowLayout;
+import com.cool.photoalbum.utils.GridSpacingItemDecoration;
 import com.cool.photoalbum.utils.PushActivityUtil;
+import com.cool.photoalbum.utils.SizeUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class HomeFragment extends BaseFragment {
 
     private EditText mSearchEditText;
     private View mClearEditTextBtn;
     private TextFlowLayout mFlowLayout;
+    private HomeCategoryAdapter mAdapter;
+    private RecyclerView mRecyclerView;
 
     @Override
     protected int getRootViewResId() {
@@ -39,6 +53,23 @@ public class HomeFragment extends BaseFragment {
 
         mSearchEditText = rootView.findViewById(R.id.home_search_edit);
         mClearEditTextBtn = rootView.findViewById(R.id.home_search_remove);
+
+        View view = rootView.findViewById(R.id.home_recommend_category_tip_view);
+        TextView textView = view.findViewById(R.id.section_text_view);
+        textView.setText("推荐分类");
+
+        mRecyclerView = rootView.findViewById(R.id.home_recycler_view);
+
+        GridLayoutManager manager = new GridLayoutManager(getContext(),3);
+        mRecyclerView.setLayoutManager(manager);
+
+        mAdapter = new HomeCategoryAdapter();
+        mRecyclerView.setAdapter(mAdapter);
+
+        int spanCount = 3; // 3 columns
+        int spacing = 15; // 50px
+        boolean includeEdge = true;
+        mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, includeEdge));
     }
 
     @Override
@@ -82,6 +113,15 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onFlowItemClick(String text) {
                 PushActivityUtil.homeToPhotoListPage(getContext(),text);
+            }
+        });
+
+        // 监听item的点击
+        mAdapter.addChildClickViewIds(R.id.item_home_category_image_view);
+        mAdapter.setOnItemChildClickListener(new OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
+                PushActivityUtil.toPhotoListPage(getContext(), DataServer.getCategoryList().get(position));
             }
         });
     }

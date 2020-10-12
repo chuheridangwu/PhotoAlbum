@@ -50,4 +50,26 @@ public class DataServer {
         textList.add("情侣头像");
         return  textList;
     }
+
+    public static List<Category> getRecommendCategory(){
+        List<Category> list = new ArrayList<>();
+
+        if (AppAccessRequest.getInstall().isOpen()){
+            Category category1 = new Category("美女车模", R.mipmap.home_recommend_beauty,2);
+            list.add(0,category1);
+        }
+
+        Category category0 = new Category("风景建筑", R.mipmap.home_recommend_animal,1);
+        Category category8 = new Category("明星写真", R.mipmap.home_recommend_avatar,3);
+        Category category2 = new Category("浪漫爱情", R.mipmap.home_recommend_cartoons,4);
+        Category category9 = new Category("花草植物", R.mipmap.home_recommend_plant,16);
+        Category category3 = new Category("卡通动漫", R.mipmap.home_recommend_weather,6);
+        list.add(category0);
+        list.add(category2);
+        list.add(category8);
+        list.add(category9);
+        list.add(category3);
+
+        return list;
+    }
 }

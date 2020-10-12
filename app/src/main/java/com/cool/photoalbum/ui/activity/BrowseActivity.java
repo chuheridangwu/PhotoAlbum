@@ -30,6 +30,7 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -47,14 +48,13 @@ public class BrowseActivity extends AppCompatActivity implements IPhotoListCallb
     private BrowseAdapter mAdapter;
     private View mIconBack;
     private ImageView mIconLike;
-    private View mIconShare;
     private View mIconDownload;
-    private ArrayList<IBasePhotoInfo> mDataList;
 
     private IPhotoListPresenter mListPresenter;
     private int mCategoryId;
     private ISearchPhotoImpl mSearchPresenter;
     private ISavePhotoImpl mSavePresenter;
+    private int mCurrentPosition;
 
 
     @Override
@@ -88,8 +88,11 @@ public class BrowseActivity extends AppCompatActivity implements IPhotoListCallb
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 // 最后一个即将显示的视图位置
-                int lastPosition = ((LinearLayoutManager)recyclerView.getLayoutManager()).findLastVisibleItemPosition();
-                if (newState == RecyclerView.SCROLL_STATE_IDLE && lastPosition >= mDataList.size() - 5){ //当停止滚动时
+                mCurrentPosition = ((LinearLayoutManager)recyclerView.getLayoutManager()).findLastVisibleItemPosition();
+
+                isFollow();
+
+                if (newState == RecyclerView.SCROLL_STATE_IDLE && mCurrentPosition >= mAdapter.getData().size() - 5){ //当停止滚动时
                     if (PushActivityUtil.photoActivityType == PushActivityUtil.PhotoActivityType.PHOTO_ACTIVITY_TYPE_CATEGORY){
                         mListPresenter.loaderMore(mCategoryId);
                     }else {
@@ -104,9 +107,9 @@ public class BrowseActivity extends AppCompatActivity implements IPhotoListCallb
     private void initEvent() {
         mIconBack = findViewById(R.id.browse_icon_back);
         mIconLike = findViewById(R.id.browse_icon_like_img);
-        mIconShare = findViewById(R.id.browse_icon_share);
         mIconDownload = findViewById(R.id.browse_icon_download);
 
+        // 返回上一个界面
         mIconBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,39 +117,25 @@ public class BrowseActivity extends AppCompatActivity implements IPhotoListCallb
             }
         });
 
+        // 关注和取消关注
         mIconLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mIconLike.setBackgroundResource(R.mipmap.browse_like_selecte);
-                mIconLike.setScaleType(ImageView.ScaleType.FIT_CENTER);
+
                 // 保存数据
                 int position = ((LinearLayoutManager)mRecyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
                 IBasePhotoInfo bean = mAdapter.getData().get(position);
-                mSavePresenter.savePhotoList(bean);
-            }
-        });
-
-        mIconShare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position = ((LinearLayoutManager)mRecyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
-                IBasePhotoInfo bean = mAdapter.getData().get(position);
-
-                // 调用系统分享
-
-                /** * 分享图片 */
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setType("image/png");
-                try {
-                    URL url = new URL(bean.smallUrl());
-                    intent.putExtra(Intent.EXTRA_STREAM, url.toURI());
-                } catch (MalformedURLException | URISyntaxException e) {
-                    e.printStackTrace();
+                if (isFollow()){
+                    mIconLike.setImageResource(R.mipmap.browse_like_normal);
+                    mSavePresenter.removePhoto(bean);
+                }else {
+                    mIconLike.setImageResource(R.mipmap.browse_like_selecte);
+                    mSavePresenter.savePhotoList(bean);
                 }
-                startActivity(Intent.createChooser(intent,"title"));
             }
         });
 
+        // 下载图片
         mIconDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -159,8 +148,24 @@ public class BrowseActivity extends AppCompatActivity implements IPhotoListCallb
             }
         });
 
+        isFollow();
     }
 
+    // 判断是否已经关注了，已经收藏了就不允许再次点击了
+    private boolean isFollow(){
+        List<IBasePhotoInfo> photos = mSavePresenter.getPhotoList();
+        IBasePhotoInfo photoInfo = mAdapter.getData().get(mCurrentPosition);
+
+
+        for (IBasePhotoInfo photo : photos) {
+            if (photo.smallUrl().equals(photoInfo.smallUrl())){
+                mIconLike.setImageResource(R.mipmap.browse_like_selecte);
+                return true;
+            }
+        }
+        mIconLike.setImageResource(R.mipmap.browse_like_normal);
+        return false;
+    }
 
     private void initView() {
 
@@ -178,11 +183,11 @@ public class BrowseActivity extends AppCompatActivity implements IPhotoListCallb
         mRecyclerView.setAdapter(mAdapter);
 
         Intent intent = getIntent();
-        mDataList = intent.getParcelableArrayListExtra(Constants.KEY_FEED_BEAN_LIST);
+        List<IBasePhotoInfo> list = intent.getParcelableArrayListExtra(Constants.KEY_FEED_BEAN_LIST);
         mCategoryId = intent.getIntExtra(Constants.KEY_FEED_BEAN_LIST_CATEGORY_ID,0);
-        int position = intent.getIntExtra(Constants.KEY_FEED_BEAN_LIST_POSITION,0);
-        mAdapter.setList(mDataList);
-        mRecyclerView.scrollToPosition(position);
+        mCurrentPosition = intent.getIntExtra(Constants.KEY_FEED_BEAN_LIST_POSITION,0);
+        mAdapter.setList(list);
+        mRecyclerView.scrollToPosition(mCurrentPosition);
     }
 
 
@@ -226,7 +231,6 @@ public class BrowseActivity extends AppCompatActivity implements IPhotoListCallb
 
     @Override
     public void onLoadMoreLoaded(PhotoList contents) {
-        mDataList.addAll(contents.getFeeds());
         mAdapter.addData(contents.getFeeds());
     }
 
@@ -237,7 +241,6 @@ public class BrowseActivity extends AppCompatActivity implements IPhotoListCallb
 
     @Override
     public void onLoadMoreLoaded(SearchResult contents) {
-        mDataList.addAll(contents.getItems());
         mAdapter.addData(contents.getItems());
     }
 
@@ -248,7 +251,7 @@ public class BrowseActivity extends AppCompatActivity implements IPhotoListCallb
 
     @Override
     public int getStartPosition() {
-        return mDataList.size();
+        return mAdapter.getData().size();
     }
 
     @Override

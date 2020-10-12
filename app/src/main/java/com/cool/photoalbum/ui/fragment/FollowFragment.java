@@ -78,8 +78,6 @@ public class FollowFragment extends BaseFragment {
     @Override
     protected void initPresenter() {
         mSavePresenter = new ISavePhotoImpl();
-
-        refreshData();
     }
 
     @Override
@@ -88,6 +86,13 @@ public class FollowFragment extends BaseFragment {
         if (hidden == false){
             refreshData();
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        refreshData();
+
     }
 
     private void refreshData(){

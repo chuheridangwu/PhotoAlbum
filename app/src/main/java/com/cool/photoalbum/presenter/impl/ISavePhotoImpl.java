@@ -15,12 +15,31 @@ public class ISavePhotoImpl {
         if (photos == null){
             photos = new ArrayList<>();
         }
-        if (photos.contains(photoInfo)){
-            photos.remove(photoInfo);
+        // 根据值判断是否删除
+        List<IBasePhotoInfo> data = new ArrayList<>(photos);
+        for (IBasePhotoInfo photo : data) {
+            if (photo.smallUrl().equals(photoInfo.smallUrl())){
+                photos.remove(photo);
+            }
         }
 
         photos.add(photoInfo);
 
+        JsonCacheUtil.getInstance().savePhotoInfo(SAVE_KEY,photos);
+    }
+
+    public void removePhoto(IBasePhotoInfo photoInfo){
+        List<IBasePhotoInfo> photos = JsonCacheUtil.getInstance().getPhotos(SAVE_KEY);
+        if (photos == null){
+            photos = new ArrayList<>();
+        }
+        // 根据值判断是否删除
+        List<IBasePhotoInfo> data = new ArrayList<>(photos);
+        for (IBasePhotoInfo photo : data) {
+            if (photo.smallUrl().equals(photoInfo.smallUrl())){
+                photos.remove(photo);
+            }
+        }
         JsonCacheUtil.getInstance().savePhotoInfo(SAVE_KEY,photos);
     }
 

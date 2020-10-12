@@ -1,5 +1,6 @@
 package com.cool.photoalbum.model;
 
+import com.cool.photoalbum.model.domain.Access;
 import com.cool.photoalbum.model.domain.PhotoList;
 import com.cool.photoalbum.model.domain.SearchResult;
 
@@ -19,7 +20,7 @@ public interface Api {
 
     // 启动接口
     @GET("JsonData/master/json.txt")
-    Call<ResponseBody> getAppAccess();
+    Call<Access> getAppAccess();
 
     // 搜索结果
     @GET("pics")

@@ -1,6 +1,7 @@
 package com.cool.photoalbum.model.domain;
 
 import com.cool.photoalbum.R;
+import com.cool.photoalbum.utils.AppAccessRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +13,13 @@ public class DataServer {
 
     public static List<Category> getCategoryList(){
         List<Category> list = new ArrayList<>();
+
+        if (AppAccessRequest.getInstall().isOpen()){
+            Category category1 = new Category("美女车模", R.mipmap.category_girl,2);
+            list.add(0,category1);
+        }
+
         Category category0 = new Category("风景建筑", R.mipmap.category_scape,1);
-        Category category1 = new Category("美女车模", R.mipmap.category_girl,2);
         Category category8 = new Category("明星写真", R.mipmap.category_star,3);
         Category category2 = new Category("浪漫爱情", R.mipmap.category_love,4);
         Category category9 = new Category("花草植物", R.mipmap.category_forest,16);
@@ -23,7 +29,6 @@ public class DataServer {
         Category category6 = new Category("神秘星座", R.mipmap.category_constellation,18);
         Category category7 = new Category("创意设计", R.mipmap.category_creativity,14);
         list.add(category0);
-        list.add(category1);
         list.add(category2);
         list.add(category8);
         list.add(category9);
@@ -32,6 +37,7 @@ public class DataServer {
         list.add(category5);
         list.add(category6);
         list.add(category7);
+
         return list;
     }
 }

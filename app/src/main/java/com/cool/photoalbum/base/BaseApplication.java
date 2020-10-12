@@ -14,7 +14,7 @@ public class BaseApplication extends Application {
         super.onCreate();
         appContext = getBaseContext();
         MobileAds.initialize(this);
-        AppAccessRequest.getAppAccess();
+        AppAccessRequest.getInstall().getAppAccess();
     }
 
     public static Context getAppContext(){

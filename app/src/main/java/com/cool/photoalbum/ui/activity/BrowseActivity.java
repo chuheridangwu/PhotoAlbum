@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -17,11 +16,11 @@ import com.cool.photoalbum.model.domain.PhotoList;
 import com.cool.photoalbum.model.domain.SearchResult;
 import com.cool.photoalbum.presenter.IPhotoListPresenter;
 import com.cool.photoalbum.presenter.impl.IPhotoListImpl;
+import com.cool.photoalbum.presenter.impl.ISavePhotoImpl;
 import com.cool.photoalbum.presenter.impl.ISearchPhotoImpl;
 import com.cool.photoalbum.ui.adapter.BrowseAdapter;
 import com.cool.photoalbum.utils.Constants;
 import com.cool.photoalbum.utils.DonwloadSaveImg;
-import com.cool.photoalbum.utils.PresentManager;
 import com.cool.photoalbum.utils.PushActivityUtil;
 import com.cool.photoalbum.utils.ToastUtils;
 import com.cool.photoalbum.viewCallback.IPhotoListCallback;
@@ -55,6 +54,7 @@ public class BrowseActivity extends AppCompatActivity implements IPhotoListCallb
     private IPhotoListPresenter mListPresenter;
     private int mCategoryId;
     private ISearchPhotoImpl mSearchPresenter;
+    private ISavePhotoImpl mSavePresenter;
 
 
     @Override
@@ -79,6 +79,8 @@ public class BrowseActivity extends AppCompatActivity implements IPhotoListCallb
 
         mSearchPresenter = new ISearchPhotoImpl();
         mSearchPresenter.registerViewCallback(this);
+
+        mSavePresenter = new ISavePhotoImpl();
 
         // 滚动到对应位置时加载数据
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -117,6 +119,10 @@ public class BrowseActivity extends AppCompatActivity implements IPhotoListCallb
             public void onClick(View v) {
                 mIconLike.setBackgroundResource(R.mipmap.browse_like_selecte);
                 mIconLike.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                // 保存数据
+                int position = ((LinearLayoutManager)mRecyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+                IBasePhotoInfo bean = mAdapter.getData().get(position);
+                mSavePresenter.savePhotoList(bean);
             }
         });
 

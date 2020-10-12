@@ -5,12 +5,9 @@
     android:layout_height="match_parent">
 
     <include layout="@layout/include_nav_title_view"></include>
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="关注"
-        android:textSize="18sp"
-        android:textColor="@color/colorPrimaryDark"
-        android:gravity="center"></TextView>
+        android:id="@+id/follow_recycler_view"></androidx.recyclerview.widget.RecyclerView>
 
 </LinearLayout>

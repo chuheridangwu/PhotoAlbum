@@ -20,6 +20,7 @@ public class PushActivityUtil {
    public enum PhotoActivityType{
         PHOTO_ACTIVITY_TYPE_CATEGORY, //分类
         PHOTO_ACTIVITY_TYPE_SEARCH, // 搜索
+       PHOTO_ACTIVITY_TYPE_FOLLOW, // 关注
     }
 
     public static PhotoActivityType photoActivityType = PhotoActivityType.PHOTO_ACTIVITY_TYPE_CATEGORY;
@@ -50,6 +51,14 @@ public class PushActivityUtil {
         Intent intent = new Intent(context,PhotoListActivity.class);
         intent.putExtra(Constants.KEY_PHOTO_PAGER_KEYBOARD,keyboard);
         photoActivityType = PhotoActivityType.PHOTO_ACTIVITY_TYPE_SEARCH;
+        context.startActivity(intent);
+    }
+    public static void followToBrowseActivity(Context context, List<IBasePhotoInfo> photos, int index){
+        photoActivityType = PhotoActivityType.PHOTO_ACTIVITY_TYPE_FOLLOW;
+        Intent intent = new Intent(context, BrowseActivity.class);
+        intent.putParcelableArrayListExtra(Constants.KEY_FEED_BEAN_LIST, (ArrayList<? extends Parcelable>) new ArrayList<IBasePhotoInfo>(photos));
+        intent.putExtra(Constants.KEY_FEED_BEAN_LIST_POSITION,index);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 }

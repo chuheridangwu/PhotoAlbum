@@ -30,6 +30,7 @@ public class FollowFragment extends BaseFragment {
     private RecyclerView mRecyclerView;
     private PhotoListAdapter mAdapter;
     private ISavePhotoImpl mSavePresenter;
+    private View mEmptyView;
 
     @Override
     protected int getRootViewResId() {
@@ -41,6 +42,8 @@ public class FollowFragment extends BaseFragment {
         setUpState(State.SUCCESS);
         mTitle = rootView.findViewById(R.id.nav_title_view);
         mTitle.setText("关注");
+
+        mEmptyView = rootView.findViewById(R.id.follow_empty_view);
 
         GridLayoutManager manager = new GridLayoutManager(getContext(),3);
         manager.offsetChildrenVertical(5);
@@ -98,5 +101,7 @@ public class FollowFragment extends BaseFragment {
     private void refreshData(){
         mAdapter.getData().clear();
         mAdapter.setList(mSavePresenter.getPhotoList());
+
+        mEmptyView.setVisibility(mAdapter.getData().size() == 0 ? View.VISIBLE : View.GONE);
     }
 }

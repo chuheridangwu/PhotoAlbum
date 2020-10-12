@@ -42,7 +42,7 @@ public class JsonCacheUtil {
     public List<IBasePhotoInfo> getPhotos(String key){
         String json = mSharedPreferences.getString(key,null);
         if (json == null) {
-            return null;
+            return new ArrayList<>();
         }
         List<IBasePhotoInfo> photos = new ArrayList<>();
 

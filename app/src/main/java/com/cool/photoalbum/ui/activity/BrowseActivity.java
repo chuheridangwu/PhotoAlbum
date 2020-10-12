@@ -156,7 +156,6 @@ public class BrowseActivity extends AppCompatActivity implements IPhotoListCallb
         List<IBasePhotoInfo> photos = mSavePresenter.getPhotoList();
         IBasePhotoInfo photoInfo = mAdapter.getData().get(mCurrentPosition);
 
-
         for (IBasePhotoInfo photo : photos) {
             if (photo.smallUrl().equals(photoInfo.smallUrl())){
                 mIconLike.setImageResource(R.mipmap.browse_like_selecte);

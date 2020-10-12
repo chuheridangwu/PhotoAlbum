@@ -34,7 +34,7 @@ public class PhotoList {
         this.feeds = feeds;
     }
 
-    public static class FeedsBean implements Parcelable, IBasePhotoInfo {
+    public static class FeedsBean implements IBasePhotoInfo {
         /**
          * fid : 5634
          * image_large : http://cdn5.ziti2.com/papers/d76/ee7/c4dcfb2472949964cb1d1b76cf.jpg

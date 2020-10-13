@@ -59,27 +59,29 @@ public class DataServer {
             list.add(0,category1);
         }
 
-        Category category0 = new Category("风景建筑", R.mipmap.home_recommend_animal,1);
-        Category category8 = new Category("明星写真", R.mipmap.home_recommend_avatar,3);
-        Category category2 = new Category("浪漫爱情", R.mipmap.home_recommend_cartoons,4);
+        Category category0 = new Category("动物萌宠", R.mipmap.home_recommend_animal,15);
+        Category category8 = new Category("浪漫爱情", R.mipmap.home_recommend_avatar,4);
+        Category category2 = new Category("卡通动漫", R.mipmap.home_recommend_cartoons,6);
         Category category9 = new Category("花草植物", R.mipmap.home_recommend_plant,16);
-        Category category3 = new Category("卡通动漫", R.mipmap.home_recommend_weather,6);
+        Category category3 = new Category("原生壁纸", R.mipmap.home_recommend_weather,6);
+
+        Category category10 = new Category("美食", R.mipmap.home_recommend_food,19);
+        Category category11 = new Category("搞笑", R.mipmap.home_recommend_funny,20);
+        Category category12 = new Category("可爱", R.mipmap.home_recommend_lovely,13);
+        Category category13 = new Category("文字控", R.mipmap.home_recommend_text,17);
+
+        list.add(category10);
+        list.add(category12);
+
         list.add(category0);
+        list.add(category13);
+
         list.add(category2);
         list.add(category8);
         list.add(category9);
         list.add(category3);
 
-        list.add(category0);
-        list.add(category2);
-        list.add(category8);
-        list.add(category9);
-        list.add(category3);
-        list.add(category0);
-        list.add(category2);
-        list.add(category8);
-        list.add(category9);
-        list.add(category3);
+        list.add(category11);
 
         return list;
     }

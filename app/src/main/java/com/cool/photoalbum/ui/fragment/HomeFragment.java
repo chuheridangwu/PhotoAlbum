@@ -19,6 +19,7 @@ import com.cool.photoalbum.base.BaseFragment;
 import com.cool.photoalbum.model.domain.DataServer;
 import com.cool.photoalbum.ui.adapter.HomeCategoryAdapter;
 import com.cool.photoalbum.ui.custom.TextFlowLayout;
+import com.cool.photoalbum.utils.AppAccessRequest;
 import com.cool.photoalbum.utils.GridSpacingItemDecoration;
 import com.cool.photoalbum.utils.PushActivityUtil;
 import com.cool.photoalbum.utils.SizeUtils;
@@ -121,7 +122,14 @@ public class HomeFragment extends BaseFragment {
         mAdapter.setOnItemChildClickListener(new OnItemChildClickListener() {
             @Override
             public void onItemChildClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
-                PushActivityUtil.toPhotoListPage(getContext(), DataServer.getCategoryList().get(position));
+                PushActivityUtil.toPhotoListPage(getContext(), DataServer.getRecommendCategory().get(position));
+            }
+        });
+
+        AppAccessRequest.getInstall().setOnAccessResultListener(new AppAccessRequest.OnAccessResultListener() {
+            @Override
+            public void onResult() {
+                mAdapter.setList(DataServer.getRecommendCategory());
             }
         });
     }

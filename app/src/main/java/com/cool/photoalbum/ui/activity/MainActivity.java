@@ -8,8 +8,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 
 import android.view.MenuItem;
-import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 
 
@@ -18,7 +16,7 @@ import com.cool.photoalbum.base.BaseActivity;
 import com.cool.photoalbum.ui.fragment.CategoryFragment;
 import com.cool.photoalbum.ui.fragment.FollowFragment;
 import com.cool.photoalbum.ui.fragment.HomeFragment;
-import com.cool.photoalbum.ui.fragment.MeFragment;
+import com.cool.photoalbum.ui.fragment.SetupFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends BaseActivity {
@@ -26,7 +24,7 @@ public class MainActivity extends BaseActivity {
     private HomeFragment mHomeFragment;
     private CategoryFragment mCategoryFragment;
     private FollowFragment mFollowFragment;
-    private MeFragment mMeFragment;
+    private SetupFragment mSetupFragment;
     private BottomNavigationView mNavigationView;
     private FragmentManager mFm;
 
@@ -42,7 +40,7 @@ public class MainActivity extends BaseActivity {
         mHomeFragment = new HomeFragment();
         mCategoryFragment = new CategoryFragment();
         mFollowFragment = new FollowFragment();
-        mMeFragment = new MeFragment();
+        mSetupFragment = new SetupFragment();
 
         mFm = getSupportFragmentManager();
 
@@ -66,7 +64,7 @@ public class MainActivity extends BaseActivity {
                         switchFragment(mFollowFragment);
                         break;
                     case R.id.nav_item_me:
-                        switchFragment(mMeFragment);
+                        switchFragment(mSetupFragment);
                         break;
                 }
                 return true;

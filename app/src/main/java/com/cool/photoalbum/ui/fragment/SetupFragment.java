@@ -7,12 +7,12 @@ import com.cool.photoalbum.R;
 import com.cool.photoalbum.base.BaseApplication;
 import com.cool.photoalbum.base.BaseFragment;
 
-public class MeFragment extends BaseFragment {
+public class SetupFragment extends BaseFragment {
     private TextView mTitle;
 
     @Override
     protected int getRootViewResId() {
-        return R.layout.fragment_me;
+        return R.layout.fragment_set_up;
     }
 
     @Override

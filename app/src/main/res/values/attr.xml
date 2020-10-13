@@ -4,5 +4,9 @@
         <attr name="horizontalSpace" format="dimension"></attr>
         <attr name="verticalSpace" format="dimension"></attr>
     </declare-styleable>
+
+    <declare-styleable name="SectionRowStyle">
+        <attr name="title" format="string"></attr>
+    </declare-styleable>
     
 </resources>

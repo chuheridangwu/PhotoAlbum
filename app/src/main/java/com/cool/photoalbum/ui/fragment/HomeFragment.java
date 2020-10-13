@@ -94,7 +94,7 @@ public class HomeFragment extends BaseFragment {
             }
         });
 
-        // 点击确定按钮
+        // 点击键盘确定按钮
         mSearchEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
@@ -104,12 +104,21 @@ public class HomeFragment extends BaseFragment {
                         return false;
                     }
                     PushActivityUtil.homeToPhotoListPage(getContext(),keyword);
+                    mSearchEditText.setText("");
                 }
                 return false;
             }
         });
 
-        // 点击推荐按钮
+        //点击删除搜索框的文字
+        mClearEditTextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSearchEditText.setText("");
+            }
+        });
+
+        // 点击推荐文字
         mFlowLayout.setOnFlowTextItemClickListener(new TextFlowLayout.OnFlowTextItemClickListener() {
             @Override
             public void onFlowItemClick(String text) {

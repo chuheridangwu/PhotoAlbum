@@ -8,6 +8,9 @@ import androidx.fragment.app.FragmentTransaction;
 
 
 import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 
 import com.cool.photoalbum.R;
@@ -73,6 +76,9 @@ public class MainActivity extends BaseActivity {
 
     private Fragment lastFragment;
     private void switchFragment(Fragment fragment) {
+
+        switchFullScreen(fragment);
+
         FragmentTransaction transaction = mFm.beginTransaction();
         if (lastFragment != null){
             transaction.hide(lastFragment);
@@ -85,7 +91,15 @@ public class MainActivity extends BaseActivity {
         lastFragment = fragment;
 
         transaction.commit();
-//        设置是否是全屏
-//        getWindow().addFlags((fragment instanceof HomeFragment) ? WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS : WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+
+    private void switchFullScreen(Fragment fragment){
+        //  设置是否是全屏
+        if ((fragment instanceof HomeFragment)){
+            this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }else {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }
     }
 }

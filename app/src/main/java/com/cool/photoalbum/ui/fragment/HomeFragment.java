@@ -1,5 +1,6 @@
 package com.cool.photoalbum.ui.fragment;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.text.Editable;
@@ -9,6 +10,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -115,6 +117,9 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 mSearchEditText.setText("");
+                // 关闭键盘
+//              InputMethodManager inputMethodManager = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+//              inputMethodManager.hideSoftInputFromWindow(mSearchEditText.getWindowToken(),0);
             }
         });
 

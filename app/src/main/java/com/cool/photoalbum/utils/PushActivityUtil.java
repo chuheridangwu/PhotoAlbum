@@ -10,6 +10,7 @@ import com.cool.photoalbum.model.domain.PhotoList;
 import com.cool.photoalbum.presenter.IPhotoListPresenter;
 import com.cool.photoalbum.presenter.ISearchPresenter;
 import com.cool.photoalbum.ui.activity.BrowseActivity;
+import com.cool.photoalbum.ui.activity.DownloadActivity;
 import com.cool.photoalbum.ui.activity.PhotoListActivity;
 
 import java.util.ArrayList;
@@ -59,6 +60,11 @@ public class PushActivityUtil {
         intent.putParcelableArrayListExtra(Constants.KEY_FEED_BEAN_LIST, (ArrayList<? extends Parcelable>) new ArrayList<IBasePhotoInfo>(photos));
         intent.putExtra(Constants.KEY_FEED_BEAN_LIST_POSITION,index);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
+    public static void toDownloadActivity(Context context){
+        Intent intent = new Intent(context,DownloadActivity.class);
         context.startActivity(intent);
     }
 }

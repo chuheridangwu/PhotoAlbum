@@ -141,8 +141,11 @@ public class BrowseActivity extends AppCompatActivity implements IPhotoListCallb
             public void onClick(View v) {
                 int position = ((LinearLayoutManager)mRecyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
                 IBasePhotoInfo bean = mAdapter.getData().get(position);
+                // 检查相册权限
                 checkPermission();
-
+                // 保存下载图片
+                mSavePresenter.saveDownloadPhotoList(bean);
+                // 下载
                 DonwloadSaveImg.donwloadImg(BrowseActivity.this,bean.smallUrl());//iPath
 
             }

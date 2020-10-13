@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:title="首页"
+    <item android:title="@string/home"
         android:icon="@mipmap/item_home"
         android:id="@+id/nav_item_home">
     </item>
 
-    <item android:title="分类"
+    <item android:title="@string/category"
         android:icon="@mipmap/item_category"
         android:id="@+id/nav_item_category">
     </item>
 
-    <item android:title="关注"
+    <item android:title="@string/follow"
         android:icon="@mipmap/item_follow"
         android:id="@+id/nav_item_follow">
     </item>
 
-    <item android:title="个人中心"
+    <item android:title="@string/set_up"
         android:icon="@mipmap/item_me"
         android:id="@+id/nav_item_me">
     </item>

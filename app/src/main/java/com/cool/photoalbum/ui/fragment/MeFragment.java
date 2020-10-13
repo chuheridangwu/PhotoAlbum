@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.cool.photoalbum.R;
+import com.cool.photoalbum.base.BaseApplication;
 import com.cool.photoalbum.base.BaseFragment;
 
 public class MeFragment extends BaseFragment {
@@ -18,6 +19,6 @@ public class MeFragment extends BaseFragment {
     protected void initView(View rootView) {
         setUpState(State.SUCCESS);
         mTitle = rootView.findViewById(R.id.nav_title_view);
-        mTitle.setText("个人中心");
+        mTitle.setText(BaseApplication.getAppContext().getString(R.string.set_up));
     }
 }

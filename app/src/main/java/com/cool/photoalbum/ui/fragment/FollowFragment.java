@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.cool.photoalbum.R;
+import com.cool.photoalbum.base.BaseApplication;
 import com.cool.photoalbum.base.BaseFragment;
 import com.cool.photoalbum.model.domain.IBasePhotoInfo;
 import com.cool.photoalbum.presenter.impl.ISavePhotoImpl;
@@ -41,7 +42,7 @@ public class FollowFragment extends BaseFragment {
     protected void initView(View rootView) {
         setUpState(State.SUCCESS);
         mTitle = rootView.findViewById(R.id.nav_title_view);
-        mTitle.setText("关注");
+        mTitle.setText(BaseApplication.getAppContext().getString(R.string.follow));
 
         mEmptyView = rootView.findViewById(R.id.follow_empty_view);
 

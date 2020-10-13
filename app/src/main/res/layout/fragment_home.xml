@@ -31,7 +31,7 @@
                 android:background="@drawable/shape_home_edit_bg"
                 android:drawableLeft="@mipmap/home_search"
                 android:focusable="true"
-                android:hint="请输入搜索内容"
+                android:hint="@string/search_content"
                 android:imeOptions="actionSearch"
                 android:inputType="text"
                 android:maxLines="1"

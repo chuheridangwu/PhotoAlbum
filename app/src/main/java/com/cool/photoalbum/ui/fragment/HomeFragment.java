@@ -59,7 +59,7 @@ public class HomeFragment extends BaseFragment {
 
         View view = rootView.findViewById(R.id.home_recommend_category_tip_view);
         TextView textView = view.findViewById(R.id.section_text_view);
-        textView.setText("推荐分类");
+        textView.setText(R.string.recommended);
 
         mRecyclerView = rootView.findViewById(R.id.home_recycler_view);
 

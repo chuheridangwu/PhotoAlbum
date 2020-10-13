@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">图片大全</string>
+    <string name="morning">早上好</string>
+    <string name="beauty">美女</string>
+    <string name="lovely">可爱</string>
+    <string name="avatar">情侣头像</string>
+    <string name="wallpaper">壁纸</string>
+    <string name="football">足球</string>
+    <string name="basketball">篮球</string>
+    <string name="landscape">风景</string>
+    <string name="fitness">健身</string>
+    <string name="search_content">请输入搜索内容</string>
+    <string name="search_title">热门搜索</string>
+    <string name="recommended">推荐分类</string>
+    <string name="gourmet">美食</string>
+    <string name="funny">搞笑</string>
+    <string name="beautiful_text">"文字控 "</string>
+    <string name="flowers">花草植物</string>
+    <string name="cartoon_anime">卡通动漫</string>
+    <string name="romantic_love">浪漫爱情</string>
+    <string name="cute_animal">动物萌宠</string>
+    <string name="Beauty_car_model">美女车模</string>
+    <string name="Landscape_architecture">风景建筑</string>
+    <string name="star_photo">"明星写真 "</string>
+    <string name="luxury_car_selection">豪车精选</string>
+    <string name="mysterious_constellation">"神秘星座 "</string>
+    <string name="creative_design">创意设计</string>
+    <string name="category">分类</string>
+    <string name="set_up">设置</string>
+    <string name="home">首页</string>
+    <string name="follow">关注</string>
+</resources>

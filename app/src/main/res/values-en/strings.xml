@@ -38,4 +38,6 @@
     <string name="look_download_photo">"View downloaded pictures "</string>
     <string name="clear_cache_tip">clear cache success</string>
     <string name="about_me_content">Hello, I am very glad that you can use our APP. You can search for many beautiful pictures in it. You can follow and download the pictures you like. We are still growing. If you have any comments or suggestions, please let us know through the comments. Looking forward to your suggestions</string>
+    <string name="school_flower">School Flowers</string>
+    <string name="handsome_guy">Handsome guy</string>
 </resources>

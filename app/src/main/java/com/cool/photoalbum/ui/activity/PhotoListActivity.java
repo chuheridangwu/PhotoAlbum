@@ -29,6 +29,9 @@ import com.cool.photoalbum.utils.SizeUtils;
 import com.cool.photoalbum.utils.ToastUtils;
 import com.cool.photoalbum.viewCallback.IPhotoListCallback;
 import com.cool.photoalbum.viewCallback.ISearchViewCallback;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
 import com.scwang.smart.refresh.footer.ClassicsFooter;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
@@ -41,6 +44,7 @@ public class PhotoListActivity extends BaseActivity implements IPhotoListCallbac
     private PhotoListAdapter mAdapter;
     private SmartRefreshLayout mSmartRefresh;
     private ISearchPresenter mSearchPresenter;
+    private AdView adView;
 
     @Override
     public int getLayoutResId() {
@@ -73,6 +77,9 @@ public class PhotoListActivity extends BaseActivity implements IPhotoListCallbac
         mSmartRefresh = findViewById(R.id.photo_list_refresh);
 
         mTitleView = findViewById(R.id.nav_title_view);
+
+        adView = findViewById(R.id.ad_view);
+        adView.loadAd(new AdRequest.Builder().build());
     }
 
     @Override

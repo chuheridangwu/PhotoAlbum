@@ -20,4 +20,8 @@ http://ziti2.com/bizhi/content/public_time_line.php?channel=2&count=20&device=2&
     public static final String KEY_FEED_BEAN_LIST_CATEGORY_ID = "KEY_FEED_BEAN_LIST_CATEGORY_ID";
     public static final String KEY_FEED_BEAN_LIST_KEYBOARD = "KEY_FEED_BEAN_LIST_KEYBOARD";
 
+
+    public static final String KEY_AD_VIEW_ID = "ca-app-pub-3940256099942544/6300978111";
+    public static final String KEY_AD_INTERSTITIAL_VIEW_ID = "ca-app-pub-3940256099942544/1033173712";
+
 }

@@ -72,9 +72,7 @@ public class PhotoListActivity extends BaseActivity implements IPhotoListCallbac
         // 刷新
         mSmartRefresh = findViewById(R.id.photo_list_refresh);
 
-
         mTitleView = findViewById(R.id.nav_title_view);
-        mTitleView.setText("图片");
     }
 
     @Override
@@ -97,6 +95,15 @@ public class PhotoListActivity extends BaseActivity implements IPhotoListCallbac
         mSearchPresenter.registerViewCallback(this);
 
         mSmartRefresh.setRefreshFooter(new ClassicsFooter(this));
+
+        // 设置标题
+        if (PushActivityUtil.photoActivityType == PushActivityUtil.PhotoActivityType.PHOTO_ACTIVITY_TYPE_CATEGORY){
+            String categoryName = getIntent().getStringExtra(Constants.KEY_PHOTO_PAGER_CATEGORY_NAME);
+            mTitleView.setText(categoryName);
+        }else {
+            String keyboard = getIntent().getStringExtra(Constants.KEY_PHOTO_PAGER_KEYBOARD);
+            mTitleView.setText(keyboard);
+        }
     }
 
     @Override

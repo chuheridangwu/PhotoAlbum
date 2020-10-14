@@ -32,6 +32,7 @@ public class PushActivityUtil {
         photoListPresent.getCategoryContent(categoryId);
         Intent intent = new Intent(context,PhotoListActivity.class);
         intent.putExtra(Constants.KEY_PHOTO_PAGER_CATEGORY_ID,categoryId);
+        intent.putExtra(Constants.KEY_PHOTO_PAGER_CATEGORY_NAME,category.getTitle());
         photoActivityType = PhotoActivityType.PHOTO_ACTIVITY_TYPE_CATEGORY;
         context.startActivity(intent);
     }

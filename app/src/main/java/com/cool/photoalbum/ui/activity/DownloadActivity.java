@@ -1,7 +1,12 @@
 package com.cool.photoalbum.ui.activity;
 
+import android.app.Activity;
+import android.graphics.Color;
 import android.graphics.Rect;
+import android.os.Build;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -57,6 +62,8 @@ public class DownloadActivity extends BaseActivity {
                 outRect.bottom = SizeUtils.dip2px(getApplicationContext(),3);
             }
         });
+
+        setStatusBarTranslucent(this);
     }
 
     @Override
@@ -102,5 +109,23 @@ public class DownloadActivity extends BaseActivity {
         mAdapter.setList(mSavePresenter.getDownloadPhotoList());
         mEmptyView.setImageResource(R.mipmap.download_empty);
         mEmptyView.setVisibility(mAdapter.getData().size() == 0 ? View.VISIBLE : View.GONE);
+    }
+
+    /**
+     * 设置状态栏透明
+     */
+    public void setStatusBarTranslucent(Activity activity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = activity.getWindow();
+            window.setNavigationBarColor(Color.BLACK);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            View decorView = window.getDecorView();
+            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+            decorView.setSystemUiVisibility(option);
+            //透明着色
+            window.setStatusBarColor(Color.TRANSPARENT);
+        }
     }
 }

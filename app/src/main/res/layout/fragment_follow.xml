@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/include_nav_title_view" android:id="@+id/follow_nav_view"></include>
+    <include layout="@layout/include_nav_state_title_view" android:id="@+id/follow_nav_view"></include>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_below="@+id/follow_nav_view"
         android:layout_marginTop="5dp"

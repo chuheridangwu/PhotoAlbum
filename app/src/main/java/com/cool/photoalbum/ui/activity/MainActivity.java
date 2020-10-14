@@ -7,7 +7,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 
+import android.app.Activity;
+import android.graphics.Color;
+import android.os.Build;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 
 
@@ -46,6 +51,7 @@ public class MainActivity extends BaseActivity {
 
         switchFragment(mHomeFragment);
 
+        setStatusBarTranslucent(this);
     }
 
     @Override
@@ -75,8 +81,6 @@ public class MainActivity extends BaseActivity {
     private Fragment lastFragment;
     private void switchFragment(Fragment fragment) {
 
-        switchFullScreen(fragment);
-
         FragmentTransaction transaction = mFm.beginTransaction();
         if (lastFragment != null){
             transaction.hide(lastFragment);
@@ -91,12 +95,21 @@ public class MainActivity extends BaseActivity {
         transaction.commit();
     }
 
-    private void switchFullScreen(Fragment fragment){
-        //  设置是否是全屏
-        if ((fragment instanceof HomeFragment)){
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        }else {
-            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    /**
+     * 设置状态栏透明
+     */
+    public void setStatusBarTranslucent(Activity activity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = activity.getWindow();
+            window.setNavigationBarColor(Color.BLACK);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            View decorView = window.getDecorView();
+            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+            decorView.setSystemUiVisibility(option);
+            //透明着色
+            window.setStatusBarColor(Color.TRANSPARENT);
         }
     }
 }

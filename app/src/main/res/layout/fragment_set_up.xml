@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include layout="@layout/include_nav_title_view"></include>
+        <include layout="@layout/include_nav_state_title_view"></include>
 
         <View style="@style/FullMarginView"></View>
 

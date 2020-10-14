@@ -1,18 +1,25 @@
 package com.cool.photoalbum.ui.fragment;
 
+import android.content.DialogInterface;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AlertDialog;
 
 import com.cool.photoalbum.R;
 import com.cool.photoalbum.base.BaseApplication;
 import com.cool.photoalbum.base.BaseFragment;
+import com.cool.photoalbum.ui.activity.MainActivity;
+import com.cool.photoalbum.utils.DialogUtil;
 import com.cool.photoalbum.utils.GlideCacheUtil;
 import com.cool.photoalbum.utils.PushActivityUtil;
+import com.cool.photoalbum.utils.ToastUtils;
 
 public class SetupFragment extends BaseFragment {
     private TextView mTitle;
     private View mDownRow;
     private View mClearCache;
+    private View mAboutMe;
 
     @Override
     protected int getRootViewResId() {
@@ -27,6 +34,7 @@ public class SetupFragment extends BaseFragment {
 
         mDownRow = rootView.findViewById(R.id.set_up_look_download);
         mClearCache = rootView.findViewById(R.id.set_up_clear_cache);
+        mAboutMe = rootView.findViewById(R.id.set_up_about_me);
     }
 
     @Override
@@ -44,7 +52,17 @@ public class SetupFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 GlideCacheUtil.getOurInstance().clearImageAllCache(getContext());
+                ToastUtils.showToast(getString(R.string.clear_cache_tip));
+            }
+        });
+
+        // 关于我们
+        mAboutMe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogUtil.showSureDialog(getContext(),getString(R.string.about_us),getString(R.string.about_me_content));
             }
         });
     }
+
 }

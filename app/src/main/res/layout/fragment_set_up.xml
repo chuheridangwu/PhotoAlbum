@@ -42,7 +42,7 @@
 
         <com.cool.photoalbum.ui.custom.SectionRowView
             android:id="@+id/set_up_look_download"
-            sob:title="查看下载的图片"
+            sob:title="@string/look_download_photo"
             android:layout_width="match_parent"
             android:layout_height="40dp"></com.cool.photoalbum.ui.custom.SectionRowView>
 
@@ -50,7 +50,7 @@
 
         <com.cool.photoalbum.ui.custom.SectionRowView
             android:id="@+id/set_up_look_ad"
-            sob:title="观看视频屏蔽广告"
+            sob:title="@string/watch_ad"
             android:layout_width="match_parent"
             android:layout_height="40dp"></com.cool.photoalbum.ui.custom.SectionRowView>
 
@@ -58,7 +58,7 @@
 
         <com.cool.photoalbum.ui.custom.SectionRowView
             android:id="@+id/set_up_clear_cache"
-            sob:title="清除缓存"
+            sob:title="@string/clear_cache"
             android:layout_width="match_parent"
             android:layout_height="40dp"></com.cool.photoalbum.ui.custom.SectionRowView>
 
@@ -66,7 +66,7 @@
 
         <com.cool.photoalbum.ui.custom.SectionRowView
             android:id="@+id/set_up_about_me"
-            sob:title="关于我们"
+            sob:title="@string/about_us"
             android:layout_width="match_parent"
             android:layout_height="40dp"></com.cool.photoalbum.ui.custom.SectionRowView>
 

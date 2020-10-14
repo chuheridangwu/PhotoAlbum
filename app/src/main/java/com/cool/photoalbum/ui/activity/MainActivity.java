@@ -94,8 +94,7 @@ public class MainActivity extends BaseActivity {
     private void switchFullScreen(Fragment fragment){
         //  设置是否是全屏
         if ((fragment instanceof HomeFragment)){
-            this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }else {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }

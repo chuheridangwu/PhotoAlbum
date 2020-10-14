@@ -31,4 +31,11 @@
     <string name="home">首页</string>
     <string name="follow">关注</string>
     <string name="download">下载</string>
+    <string name="ok">确定</string>
+    <string name="about_us">关于我们</string>
+    <string name="clear_cache">清除缓存</string>
+    <string name="watch_ad">观看视频去除底部广告</string>
+    <string name="look_download_photo">查看下载图片</string>
+    <string name="clear_cache_tip">clear cache success</string>
+    <string name="about_me_content">你好,你可以在我们的APP中搜索很多精美的图片进行观看,对喜欢的图片可以关注和下载，我们还在成长当中，有什么意见或者建议可以通过评论告诉我们哦</string>
 </resources>

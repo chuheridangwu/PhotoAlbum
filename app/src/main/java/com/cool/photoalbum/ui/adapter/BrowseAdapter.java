@@ -18,6 +18,8 @@ import com.cool.photoalbum.R;
 import com.cool.photoalbum.model.domain.IBasePhotoInfo;
 import com.cool.photoalbum.model.domain.PhotoList;
 import com.github.chrisbanes.photoview.PhotoView;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -46,5 +48,11 @@ public class BrowseAdapter extends BaseQuickAdapter<IBasePhotoInfo, BaseViewHold
 
             }
         });
+
+        // 加载广告
+        if (getItemPosition(feedsBean) % 5 == 0){
+            AdView adView = baseViewHolder.getView(R.id.ad_view);
+            adView.loadAd(new AdRequest.Builder().build());
+        }
     }
 }

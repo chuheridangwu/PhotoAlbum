@@ -46,7 +46,7 @@ public class DataServer {
         List<String> textList = new ArrayList<>();
         textList.add(BaseApplication.getAppContext().getString(R.string.morning));
         textList.add(BaseApplication.getAppContext().getString(R.string.school_flower));
-        textList.add(BaseApplication.getAppContext().getString(R.string.school_flower));
+        textList.add(BaseApplication.getAppContext().getString(R.string.handsome_guy));
         textList.add(BaseApplication.getAppContext().getString(R.string.beauty));
         textList.add(BaseApplication.getAppContext().getString(R.string.lovely));
         textList.add(BaseApplication.getAppContext().getString(R.string.avatar));

@@ -57,5 +57,5 @@ dependencies {
     // 图片浏览
     implementation 'com.github.chrisbanes:PhotoView:2.1.3'
     //谷歌广告
-    implementation 'com.google.android.gms:play-services-ads:19.1.0'
+    implementation 'com.google.android.gms:play-services-ads:19.4.0'
 }

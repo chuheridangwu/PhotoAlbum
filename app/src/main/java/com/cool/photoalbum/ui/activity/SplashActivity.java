@@ -16,6 +16,9 @@ import com.google.android.gms.ads.AdRequest;
 
 public class SplashActivity extends AppCompatActivity {
 
+    private Handler handler;
+    private Runnable runnable;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,14 +26,22 @@ public class SplashActivity extends AppCompatActivity {
 
         initAdView();
 
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                startActivity(new Intent(SplashActivity.this,MainActivity.class));
-                finish();
-            }
-        },6000);
+        initEvent();
+
+        handler = new Handler();
+        runnable = () -> {
+            startActivity(new Intent(SplashActivity.this,MainActivity.class));
+            finish();
+        };
+        handler.postDelayed(runnable,6000);
+    }
+
+    private void initEvent() {
+        findViewById(R.id.splash_jump_btn).setOnClickListener( v-> {
+            handler.removeCallbacks(runnable);
+            startActivity(new Intent(this,MainActivity.class));
+            finish();
+        });
     }
 
     private void initAdView(){

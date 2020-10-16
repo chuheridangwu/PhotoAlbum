@@ -126,7 +126,7 @@ public class MainActivity extends BaseActivity {
             int REQUEST_PERMISSION_CODE = 1;
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_PERMISSION_CODE);
         } else {
-            Toast.makeText(this, R.string.down_tip_authority_success, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, R.string.down_tip_authority_success, Toast.LENGTH_SHORT).show();
         }
     }
 }

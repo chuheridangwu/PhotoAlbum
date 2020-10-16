@@ -74,22 +74,12 @@ public class DownloadActivity extends BaseActivity {
     @Override
     protected void initEvent() {
         mAdapter.addChildClickViewIds(R.id.photo_list_item_img_view);
-        mAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
-                PushActivityUtil.followToBrowseActivity(getApplicationContext(),mAdapter.getData(),position);
-            }
-        });
+        mAdapter.setOnItemClickListener((adapter, view, position) -> PushActivityUtil.followToBrowseActivity(getApplicationContext(),mAdapter.getData(),position));
 
         // 返回上一个界面
         ImageView backView = findViewById(R.id.nav_back);
         backView.setVisibility(View.VISIBLE);
-        backView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        backView.setOnClickListener(v -> finish());
     }
 
     @Override

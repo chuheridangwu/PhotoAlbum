@@ -1,20 +1,14 @@
 package com.cool.photoalbum.ui.activity;
 
 import android.graphics.Rect;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.cool.photoalbum.R;
 import com.cool.photoalbum.base.BaseActivity;
 import com.cool.photoalbum.model.domain.PhotoList;
@@ -29,9 +23,6 @@ import com.cool.photoalbum.utils.SizeUtils;
 import com.cool.photoalbum.utils.ToastUtils;
 import com.cool.photoalbum.viewCallback.IPhotoListCallback;
 import com.cool.photoalbum.viewCallback.ISearchViewCallback;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
 import com.scwang.smart.refresh.footer.ClassicsFooter;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;

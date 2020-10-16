@@ -56,25 +56,22 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initEvent() {
-        mNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.nav_item_home:
-                        switchFragment(mHomeFragment);
-                        break;
-                    case R.id.nav_item_category:
-                        switchFragment(mCategoryFragment);
-                        break;
-                    case R.id.nav_item_follow:
-                        switchFragment(mFollowFragment);
-                        break;
-                    case R.id.nav_item_me:
-                        switchFragment(mSetupFragment);
-                        break;
-                }
-                return true;
+        mNavigationView.setOnNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()){
+                case R.id.nav_item_home:
+                    switchFragment(mHomeFragment);
+                    break;
+                case R.id.nav_item_category:
+                    switchFragment(mCategoryFragment);
+                    break;
+                case R.id.nav_item_follow:
+                    switchFragment(mFollowFragment);
+                    break;
+                case R.id.nav_item_me:
+                    switchFragment(mSetupFragment);
+                    break;
             }
+            return true;
         });
     }
 

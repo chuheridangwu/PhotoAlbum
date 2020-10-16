@@ -35,15 +35,12 @@ public class PhotoListAdapter extends BaseSectionQuickAdapter<IBasePhotoInfo, Ba
     @Override
     protected void convertHeader(@NotNull BaseViewHolder baseViewHolder, @NotNull IBasePhotoInfo photoInfo) {
         AdLoader adLoader = new AdLoader.Builder(getContext(), "ca-app-pub-3940256099942544/2247696110")
-                .forUnifiedNativeAd(new UnifiedNativeAd.OnUnifiedNativeAdLoadedListener() {
-                    @Override
-                    public void onUnifiedNativeAdLoaded(UnifiedNativeAd unifiedNativeAd) {
-                        NativeTemplateStyle styles = new
-                                NativeTemplateStyle.Builder().withMainBackgroundColor(new ColorDrawable(0x03DAC5)).build();
-                        TemplateView template = baseViewHolder.getView(R.id.my_template);
-                        template.setStyles(styles);
-                        template.setNativeAd(unifiedNativeAd);
-                    }
+                .forUnifiedNativeAd(unifiedNativeAd -> {
+                    NativeTemplateStyle styles = new
+                            NativeTemplateStyle.Builder().withMainBackgroundColor(new ColorDrawable(0x03DAC5)).build();
+                    TemplateView template = baseViewHolder.getView(R.id.my_template);
+                    template.setStyles(styles);
+                    template.setNativeAd(unifiedNativeAd);
                 })
                 .build();
 

@@ -1,15 +1,11 @@
 package com.cool.photoalbum.ui.fragment;
 
-import android.content.DialogInterface;
 import android.view.View;
 import android.widget.TextView;
-
-import androidx.appcompat.app.AlertDialog;
 
 import com.cool.photoalbum.R;
 import com.cool.photoalbum.base.BaseApplication;
 import com.cool.photoalbum.base.BaseFragment;
-import com.cool.photoalbum.ui.activity.MainActivity;
 import com.cool.photoalbum.utils.DialogUtil;
 import com.cool.photoalbum.utils.GlideCacheUtil;
 import com.cool.photoalbum.utils.PushActivityUtil;
@@ -40,29 +36,16 @@ public class SetupFragment extends BaseFragment {
     @Override
     protected void initListener() {
         // 跳转到下载界面
-        mDownRow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PushActivityUtil.toDownloadActivity(getContext());
-            }
-        });
+        mDownRow.setOnClickListener(v -> PushActivityUtil.toDownloadActivity(getContext()));
 
         // 清除缓存
-        mClearCache.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                GlideCacheUtil.getOurInstance().clearImageAllCache(getContext());
-                ToastUtils.showToast(getString(R.string.clear_cache_tip));
-            }
+        mClearCache.setOnClickListener(v -> {
+            GlideCacheUtil.getOurInstance().clearImageAllCache(getContext());
+            ToastUtils.showToast(getString(R.string.clear_cache_tip));
         });
 
         // 关于我们
-        mAboutMe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DialogUtil.showSureDialog(getContext(),getString(R.string.about_us),getString(R.string.about_me_content));
-            }
-        });
+        mAboutMe.setOnClickListener(v -> DialogUtil.showSureDialog(getContext(),getString(R.string.about_us),getString(R.string.about_me_content)));
     }
 
 }

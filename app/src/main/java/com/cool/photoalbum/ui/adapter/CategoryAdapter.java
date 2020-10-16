@@ -10,9 +10,7 @@ import com.cool.photoalbum.model.domain.Category;
 import com.cool.photoalbum.model.domain.DataServer;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
 
 public class CategoryAdapter extends BaseQuickAdapter<Category, BaseViewHolder> {
 

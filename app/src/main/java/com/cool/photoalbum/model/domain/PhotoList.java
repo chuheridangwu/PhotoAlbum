@@ -138,6 +138,7 @@ public class PhotoList {
             dest.writeString(this.image_height);
             dest.writeString(this._$DCreateTs24);
             dest.writeString(this.favored);
+            dest.writeBoolean(this.isHeader);
         }
 
         public FeedsBean() {
@@ -151,6 +152,7 @@ public class PhotoList {
             this.image_height = in.readString();
             this._$DCreateTs24 = in.readString();
             this.favored = in.readString();
+            this.isHeader = in.readBoolean();
         }
 
         public static final Parcelable.Creator<FeedsBean> CREATOR = new Parcelable.Creator<FeedsBean>() {

@@ -1,11 +1,9 @@
 package com.cool.photoalbum.ui.adapter;
 
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseSectionQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cool.photoalbum.R;
@@ -14,7 +12,6 @@ import com.google.android.ads.nativetemplates.NativeTemplateStyle;
 import com.google.android.ads.nativetemplates.TemplateView;
 import com.google.android.gms.ads.AdLoader;
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.formats.UnifiedNativeAd;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -34,10 +31,12 @@ public class PhotoListAdapter extends BaseSectionQuickAdapter<IBasePhotoInfo, Ba
 
     @Override
     protected void convertHeader(@NotNull BaseViewHolder baseViewHolder, @NotNull IBasePhotoInfo photoInfo) {
-        AdLoader adLoader = new AdLoader.Builder(getContext(), "ca-app-pub-3940256099942544/2247696110")
+        AdLoader adLoader = new AdLoader.Builder(getContext(), getContext().getString(R.string.Ad_Mob_Native_ad))
                 .forUnifiedNativeAd(unifiedNativeAd -> {
                     NativeTemplateStyle styles = new
-                            NativeTemplateStyle.Builder().withMainBackgroundColor(new ColorDrawable(0x03DAC5)).build();
+                            NativeTemplateStyle.Builder()
+                            .withMainBackgroundColor(new ColorDrawable(0xFFFFFF))
+                            .build();
                     TemplateView template = baseViewHolder.getView(R.id.my_template);
                     template.setStyles(styles);
                     template.setNativeAd(unifiedNativeAd);

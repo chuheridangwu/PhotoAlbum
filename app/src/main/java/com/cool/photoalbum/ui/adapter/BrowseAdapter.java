@@ -1,23 +1,21 @@
 package com.cool.photoalbum.ui.adapter;
 
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.ProgressBar;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.Request;
 import com.bumptech.glide.request.target.CustomTarget;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.target.SizeReadyCallback;
-import com.bumptech.glide.request.target.Target;
-import com.bumptech.glide.request.target.ThumbnailImageViewTarget;
 import com.bumptech.glide.request.transition.Transition;
-import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseSectionQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cool.photoalbum.R;
 import com.cool.photoalbum.model.domain.IBasePhotoInfo;
-import com.cool.photoalbum.model.domain.PhotoList;
 import com.github.chrisbanes.photoview.PhotoView;
+import com.google.android.ads.nativetemplates.NativeTemplateStyle;
+import com.google.android.ads.nativetemplates.TemplateView;
+import com.google.android.gms.ads.AdLoader;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
@@ -26,9 +24,11 @@ import org.jetbrains.annotations.NotNull;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-public class BrowseAdapter extends BaseQuickAdapter<IBasePhotoInfo, BaseViewHolder> {
+import java.util.ArrayList;
+
+public class BrowseAdapter extends BaseSectionQuickAdapter<IBasePhotoInfo, BaseViewHolder> {
     public BrowseAdapter(){
-        super(R.layout.item_browse_view);
+        super(R.layout.item_browse_ad_view,R.layout.item_browse_view,new ArrayList<>());
     }
     @Override
     protected void convert(@NotNull BaseViewHolder baseViewHolder, IBasePhotoInfo feedsBean) {
@@ -54,5 +54,22 @@ public class BrowseAdapter extends BaseQuickAdapter<IBasePhotoInfo, BaseViewHold
             AdView adView = baseViewHolder.getView(R.id.ad_view);
             adView.loadAd(new AdRequest.Builder().build());
         }
+    }
+
+    @Override
+    protected void convertHeader(@NotNull BaseViewHolder baseViewHolder, @NotNull IBasePhotoInfo photoInfo) {
+        AdLoader adLoader = new AdLoader.Builder(getContext(), getContext().getString(R.string.Ad_Mob_Native_ad))
+                .forUnifiedNativeAd(unifiedNativeAd -> {
+                    NativeTemplateStyle styles = new
+                            NativeTemplateStyle.Builder()
+                            .withMainBackgroundColor(new ColorDrawable(0xFFFFFF))
+                            .build();
+                    TemplateView template = baseViewHolder.getView(R.id.my_template);
+                    template.setStyles(styles);
+                    template.setNativeAd(unifiedNativeAd);
+                })
+                .build();
+
+        adLoader.loadAd(new AdRequest.Builder().build());
     }
 }

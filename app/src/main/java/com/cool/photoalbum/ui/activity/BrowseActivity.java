@@ -10,6 +10,14 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.cool.photoalbum.R;
 import com.cool.photoalbum.model.domain.IBasePhotoInfo;
 import com.cool.photoalbum.model.domain.PhotoList;
@@ -26,29 +34,13 @@ import com.cool.photoalbum.utils.ToastUtils;
 import com.cool.photoalbum.viewCallback.IPhotoListCallback;
 import com.cool.photoalbum.viewCallback.ISearchViewCallback;
 
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.PagerSnapHelper;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class BrowseActivity extends AppCompatActivity implements IPhotoListCallback, ISearchViewCallback {
 
-    private static int REQUEST_PERMISSION_CODE = 1;
-
     private RecyclerView mRecyclerView;
     private BrowseAdapter mAdapter;
-    private View mIconBack;
     private ImageView mIconLike;
-    private View mIconDownload;
 
     private IPhotoListPresenter mListPresenter;
     private int mCategoryId;
@@ -105,50 +97,39 @@ public class BrowseActivity extends AppCompatActivity implements IPhotoListCallb
     }
 
     private void initEvent() {
-        mIconBack = findViewById(R.id.browse_icon_back);
+        View mIconBack = findViewById(R.id.browse_icon_back);
         mIconLike = findViewById(R.id.browse_icon_like_img);
-        mIconDownload = findViewById(R.id.browse_icon_download);
+        View mIconDownload = findViewById(R.id.browse_icon_download);
 
         // 返回上一个界面
-        mIconBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        mIconBack.setOnClickListener(v -> finish());
 
         // 关注和取消关注
-        mIconLike.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        mIconLike.setOnClickListener(v -> {
 
-                // 保存数据
-                int position = ((LinearLayoutManager)mRecyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
-                IBasePhotoInfo bean = mAdapter.getData().get(position);
-                if (isFollow()){
-                    mIconLike.setImageResource(R.mipmap.browse_like_normal);
-                    mSavePresenter.removePhoto(bean);
-                }else {
-                    mIconLike.setImageResource(R.mipmap.browse_like_selecte);
-                    mSavePresenter.savePhotoList(bean);
-                }
+            // 保存数据
+            int position = ((LinearLayoutManager)mRecyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+            IBasePhotoInfo bean = mAdapter.getData().get(position);
+            if (isFollow()){
+                mIconLike.setImageResource(R.mipmap.browse_like_normal);
+                mSavePresenter.removePhoto(bean);
+            }else {
+                mIconLike.setImageResource(R.mipmap.browse_like_selecte);
+                mSavePresenter.savePhotoList(bean);
             }
         });
 
         // 下载图片
-        mIconDownload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position = ((LinearLayoutManager)mRecyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
-                IBasePhotoInfo bean = mAdapter.getData().get(position);
-                // 检查相册权限
-                checkPermission();
-                // 保存下载图片
-                mSavePresenter.saveDownloadPhotoList(bean);
-                // 下载
-                DonwloadSaveImg.donwloadImg(BrowseActivity.this,bean.smallUrl());//iPath
+        mIconDownload.setOnClickListener(v -> {
+            int position = ((LinearLayoutManager)mRecyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+            IBasePhotoInfo bean = mAdapter.getData().get(position);
+            // 检查相册权限
+            checkPermission();
+            // 保存下载图片
+            mSavePresenter.saveDownloadPhotoList(bean);
+            // 下载
+            DonwloadSaveImg.donwloadImg(BrowseActivity.this,bean.smallUrl());//iPath
 
-            }
         });
 
         isFollow();
@@ -204,6 +185,7 @@ public class BrowseActivity extends AppCompatActivity implements IPhotoListCallb
                 Toast.makeText(this, "请开通相关权限，否则无法正常使用本应用！", Toast.LENGTH_SHORT).show();
             }
             //申请权限
+            int REQUEST_PERMISSION_CODE = 1;
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_PERMISSION_CODE);
         } else {
             Toast.makeText(this, "授权成功！", Toast.LENGTH_SHORT).show();

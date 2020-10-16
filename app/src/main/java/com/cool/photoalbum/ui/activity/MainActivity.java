@@ -1,20 +1,15 @@
 package com.cool.photoalbum.ui.activity;
 
-import androidx.annotation.NonNull;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
-
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Build;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.cool.photoalbum.R;
 import com.cool.photoalbum.base.BaseActivity;

@@ -13,6 +13,9 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.cool.photoalbum.R;
+import com.cool.photoalbum.base.BaseApplication;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -32,7 +35,7 @@ public class DonwloadSaveImg {
     public static void donwloadImg(Context contexts, String filePaths) {
         context = contexts;
         filePath = filePaths;
-        mSaveDialog = ProgressDialog.show(context, "保存图片", "图片正在保存中，请稍等...", true);
+        mSaveDialog = ProgressDialog.show(context, contexts.getString(R.string.down_tip_save), contexts.getString(R.string.down_tip_save_tips), true);
         new Thread(saveFileRunnable).start();
     }
 
@@ -50,9 +53,9 @@ public class DonwloadSaveImg {
                     inputStream.close();
                 }
                 saveFile(mBitmap);
-                mSaveMessage = "图片保存成功！";
+                mSaveMessage = BaseApplication.getAppContext().getString(R.string.download_tip_success);
             } catch (IOException e) {
-                mSaveMessage = "图片保存失败！";
+                mSaveMessage = BaseApplication.getAppContext().getString(R.string.down_tip_file);
                 e.printStackTrace();
             } catch (Exception e) {
                 e.printStackTrace();

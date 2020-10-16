@@ -42,4 +42,10 @@
     <string name="Ad_Mob_Banner_Unit_Id">ca-app-pub-3940256099942544/6300978111</string>
     <string name="Ad_Mob_Native_ad">ca-app-pub-3940256099942544/2247696110</string>
     <string name="jump">Jump</string>
+    <string name="download_tip_success">The picture was saved successfully!</string>
+    <string name="down_tip_file">Picture save failed! Please check the relevant permissions</string>
+    <string name="down_tip_save">Save Picture</string>
+    <string name="down_tip_save_tips">The picture is being saved, please wait...</string>
+    <string name="down_tip_authority">Please activate relevant permissions, otherwise you cannot use this application normally</string>
+    <string name="down_tip_authority_success">Authorization succeeded</string>
 </resources>

@@ -1,12 +1,16 @@
 package com.cool.photoalbum.ui.activity;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -47,6 +51,9 @@ public class MainActivity extends BaseActivity {
         switchFragment(mHomeFragment);
 
         setStatusBarTranslucent(this);
+
+        // 检查相册权限
+        checkPermission();
     }
 
     @Override
@@ -102,6 +109,24 @@ public class MainActivity extends BaseActivity {
             decorView.setSystemUiVisibility(option);
             //透明着色
             window.setStatusBarColor(Color.TRANSPARENT);
+        }
+    }
+
+    // 获取相册权限
+    private void checkPermission() {
+        //检查权限（NEED_PERMISSION）是否被授权 PackageManager.PERMISSION_GRANTED表示同意授权
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            //用户已经拒绝过一次，再次弹出权限申请对话框需要给用户一个解释
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission
+                    .WRITE_EXTERNAL_STORAGE)) {
+                Toast.makeText(this, R.string.down_tip_authority, Toast.LENGTH_SHORT).show();
+            }
+            //申请权限
+            int REQUEST_PERMISSION_CODE = 1;
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_PERMISSION_CODE);
+        } else {
+            Toast.makeText(this, R.string.down_tip_authority_success, Toast.LENGTH_SHORT).show();
         }
     }
 }

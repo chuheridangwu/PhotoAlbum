@@ -43,4 +43,10 @@
     <string name="Ad_Mob_Banner_Unit_Id">ca-app-pub-3940256099942544/6300978111</string>
     <string name="Ad_Mob_Native_ad">ca-app-pub-3940256099942544/2247696110</string>
     <string name="jump">跳过</string>
+    <string name="download_tip_success">图片保存成功！</string>
+    <string name="down_tip_file">图片保存失败！请检查相关权限</string>
+    <string name="down_tip_save">保存图片</string>
+    <string name="down_tip_save_tips">图片正在保存中，请稍等...</string>
+    <string name="down_tip_authority">请开通相关权限，否则无法正常使用本应用！</string>
+    <string name="down_tip_authority_success">授权成功！</string>
 </resources>

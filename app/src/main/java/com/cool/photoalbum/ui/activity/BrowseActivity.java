@@ -123,8 +123,7 @@ public class BrowseActivity extends AppCompatActivity implements IPhotoListCallb
         mIconDownload.setOnClickListener(v -> {
             int position = ((LinearLayoutManager)mRecyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
             IBasePhotoInfo bean = mAdapter.getData().get(position);
-            // 检查相册权限
-            checkPermission();
+
             // 保存下载图片
             mSavePresenter.saveDownloadPhotoList(bean);
             // 下载
@@ -171,25 +170,6 @@ public class BrowseActivity extends AppCompatActivity implements IPhotoListCallb
         mCurrentPosition = intent.getIntExtra(Constants.KEY_FEED_BEAN_LIST_POSITION,0);
         mAdapter.setList(list);
         mRecyclerView.scrollToPosition(mCurrentPosition);
-    }
-
-
-    // 获取相册权限
-    private void checkPermission() {
-        //检查权限（NEED_PERMISSION）是否被授权 PackageManager.PERMISSION_GRANTED表示同意授权
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            //用户已经拒绝过一次，再次弹出权限申请对话框需要给用户一个解释
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission
-                    .WRITE_EXTERNAL_STORAGE)) {
-                Toast.makeText(this, "请开通相关权限，否则无法正常使用本应用！", Toast.LENGTH_SHORT).show();
-            }
-            //申请权限
-            int REQUEST_PERMISSION_CODE = 1;
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_PERMISSION_CODE);
-        } else {
-            Toast.makeText(this, "授权成功！", Toast.LENGTH_SHORT).show();
-        }
     }
 
     @Override

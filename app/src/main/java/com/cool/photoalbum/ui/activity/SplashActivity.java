@@ -33,7 +33,7 @@ public class SplashActivity extends AppCompatActivity {
             startActivity(new Intent(SplashActivity.this,MainActivity.class));
             finish();
         };
-        handler.postDelayed(runnable,6000);
+        handler.postDelayed(runnable,5000);
     }
 
     private void initEvent() {

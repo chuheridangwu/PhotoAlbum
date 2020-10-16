@@ -15,29 +15,6 @@
 
         <View style="@style/FullMarginView"></View>
 
-        <RelativeLayout
-            android:id="@+id/rl_notify_live"
-            android:layout_width="match_parent"
-            android:layout_height="40dp">
-
-            <TextView
-                style="@style/BigTextAppearance.ItemLeft"
-                android:text="添加关注密码" />
-
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/set_up_setting_password"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="@dimen/left_right_margin"
-                android:layout_marginRight="@dimen/left_right_margin"
-                android:clickable="true"
-                android:textOff="开启"
-                android:textOn="关闭" />
-        </RelativeLayout>
-
         <View style="@style/FullMarginView"></View>
 
         <com.cool.photoalbum.ui.custom.SectionRowView
@@ -48,13 +25,13 @@
 
         <View style="@style/FullMarginView"></View>
 
-        <com.cool.photoalbum.ui.custom.SectionRowView
-            android:id="@+id/set_up_look_ad"
-            sob:title="@string/watch_ad"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"></com.cool.photoalbum.ui.custom.SectionRowView>
+<!--        <com.cool.photoalbum.ui.custom.SectionRowView-->
+<!--            android:id="@+id/set_up_look_ad"-->
+<!--            sob:title="@string/watch_ad"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="40dp"></com.cool.photoalbum.ui.custom.SectionRowView>-->
 
-        <View style="@style/FullMarginView"></View>
+<!--        <View style="@style/FullMarginView"></View>-->
 
         <com.cool.photoalbum.ui.custom.SectionRowView
             android:id="@+id/set_up_clear_cache"

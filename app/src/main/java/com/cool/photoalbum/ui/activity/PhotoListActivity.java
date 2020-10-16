@@ -55,7 +55,7 @@ public class PhotoListActivity extends BaseActivity implements IPhotoListCallbac
 
     @Override
     protected void initView() {
-        GridLayoutManager manager = new GridLayoutManager(this,3);
+        GridLayoutManager manager = new GridLayoutManager(this, 3);
         manager.offsetChildrenVertical(5);
         manager.offsetChildrenHorizontal(5);
 
@@ -69,9 +69,9 @@ public class PhotoListActivity extends BaseActivity implements IPhotoListCallbac
             @Override
             public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
                 super.getItemOffsets(outRect, view, parent, state);
-                outRect.left = SizeUtils.dip2px(getApplicationContext(),3);
-                outRect.right = SizeUtils.dip2px(getApplicationContext(),3);
-                outRect.bottom = SizeUtils.dip2px(getApplicationContext(),3);
+                outRect.left = SizeUtils.dip2px(getApplicationContext(), 3);
+                outRect.right = SizeUtils.dip2px(getApplicationContext(), 3);
+                outRect.bottom = SizeUtils.dip2px(getApplicationContext(), 3);
             }
         });
 
@@ -104,10 +104,10 @@ public class PhotoListActivity extends BaseActivity implements IPhotoListCallbac
         mSmartRefresh.setRefreshFooter(new ClassicsFooter(this));
 
         // 设置标题
-        if (PushActivityUtil.photoActivityType == PushActivityUtil.PhotoActivityType.PHOTO_ACTIVITY_TYPE_CATEGORY){
+        if (PushActivityUtil.photoActivityType == PushActivityUtil.PhotoActivityType.PHOTO_ACTIVITY_TYPE_CATEGORY) {
             String categoryName = getIntent().getStringExtra(Constants.KEY_PHOTO_PAGER_CATEGORY_NAME);
             mTitleView.setText(categoryName);
-        }else {
+        } else {
             String keyboard = getIntent().getStringExtra(Constants.KEY_PHOTO_PAGER_KEYBOARD);
             mTitleView.setText(keyboard);
         }
@@ -116,22 +116,19 @@ public class PhotoListActivity extends BaseActivity implements IPhotoListCallbac
     @Override
     protected void initEvent() {
         mAdapter.addChildClickViewIds(R.id.photo_list_item_img_view);
-        mAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
-                int categoryId = getIntent().getIntExtra(Constants.KEY_PHOTO_PAGER_CATEGORY_ID,1);
-                String keyboard = getIntent().getStringExtra(Constants.KEY_PHOTO_PAGER_KEYBOARD);
-                PushActivityUtil.toBrowseActivity(getApplicationContext(),mAdapter.getData(),position,categoryId,keyboard);
-            }
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            int categoryId = getIntent().getIntExtra(Constants.KEY_PHOTO_PAGER_CATEGORY_ID, 1);
+            String keyboard = getIntent().getStringExtra(Constants.KEY_PHOTO_PAGER_KEYBOARD);
+            PushActivityUtil.toBrowseActivity(getApplicationContext(), mAdapter.getData(), position, categoryId, keyboard);
         });
 
         mSmartRefresh.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                if (PushActivityUtil.photoActivityType == PushActivityUtil.PhotoActivityType.PHOTO_ACTIVITY_TYPE_CATEGORY){
-                    int categoryId = getIntent().getIntExtra(Constants.KEY_PHOTO_PAGER_CATEGORY_ID,1);
+                if (PushActivityUtil.photoActivityType == PushActivityUtil.PhotoActivityType.PHOTO_ACTIVITY_TYPE_CATEGORY) {
+                    int categoryId = getIntent().getIntExtra(Constants.KEY_PHOTO_PAGER_CATEGORY_ID, 1);
                     mListPresenter.loaderMore(categoryId);
-                }else {
+                } else {
                     String keyboard = getIntent().getStringExtra(Constants.KEY_PHOTO_PAGER_KEYBOARD);
                     mSearchPresenter.loadMoreResult(keyboard);
                 }
@@ -187,12 +184,12 @@ public class PhotoListActivity extends BaseActivity implements IPhotoListCallbac
         mAdapter.setList(addAdData(contents));
     }
 
-    private List<PhotoList.FeedsBean> addAdData(PhotoList contents){
+    private List<PhotoList.FeedsBean> addAdData(PhotoList contents) {
         List<PhotoList.FeedsBean> mData = new ArrayList<>(contents.getFeeds());
         PhotoList.FeedsBean feedsBean = new PhotoList.FeedsBean();
         feedsBean.setHeader(true);
-        int position = mData.size() - 3 > 0 ? mData.size() - 3  : 0;
-        mData.add(position,feedsBean);
+        int position = Math.max(mData.size() - 3, 0);
+        mData.add(position, feedsBean);
         return mData;
     }
 
@@ -201,12 +198,22 @@ public class PhotoListActivity extends BaseActivity implements IPhotoListCallbac
         if (mSmartRefresh != null) {
             mSmartRefresh.finishLoadMore();
         }
-        mAdapter.addData(contents.getItems());
+        mAdapter.addData(addAdSearchData(contents));
     }
 
     @Override
     public void onContentLoaded(SearchResult contents) {
-        mAdapter.setList(contents.getItems());
+
+        mAdapter.setList(addAdSearchData(contents));
+    }
+
+    private List<SearchResult.ItemsBean> addAdSearchData(SearchResult contents) {
+        List<SearchResult.ItemsBean> mData = new ArrayList<>(contents.getItems());
+        SearchResult.ItemsBean feedsBean = new SearchResult.ItemsBean();
+        feedsBean.setHeader(true);
+        int position = Math.max(mData.size() - 3, 0);
+        mData.add(position, feedsBean);
+        return mData;
     }
 
     @Override

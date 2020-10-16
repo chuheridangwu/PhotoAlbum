@@ -69,12 +69,9 @@ public class TextFlowLayout extends ViewGroup {
         for (String text : textList) {
             TextView view = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.flow_text_view,this,false);
             view.setText(text);
-            view.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mItemClickListener != null) {
-                        mItemClickListener.onFlowItemClick(text);
-                    }
+            view.setOnClickListener(v -> {
+                if (mItemClickListener != null) {
+                    mItemClickListener.onFlowItemClick(text);
                 }
             });
             addView(view);

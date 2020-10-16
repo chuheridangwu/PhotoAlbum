@@ -15,8 +15,6 @@
 
         <View style="@style/FullMarginView"></View>
 
-        <View style="@style/FullMarginView"></View>
-
         <com.cool.photoalbum.ui.custom.SectionRowView
             android:id="@+id/set_up_look_download"
             sob:title="@string/look_download_photo"

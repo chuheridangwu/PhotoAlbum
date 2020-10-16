@@ -2,6 +2,8 @@ package com.cool.photoalbum.model.domain;
 
 import android.os.Parcel;
 
+import com.chad.library.adapter.base.entity.SectionEntity;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -1158,5 +1160,21 @@ public class SearchResult {
                 return new ItemsBean[size];
             }
         };
+
+        boolean isHeader;
+
+        public void setHeader(boolean header) {
+            isHeader = header;
+        }
+
+        @Override
+        public boolean isHeader() {
+            return isHeader;
+        }
+
+        @Override
+        public int getItemType() {
+            return isHeader ? SectionEntity.HEADER_TYPE : SectionEntity.NORMAL_TYPE;
+        }
     }
 }

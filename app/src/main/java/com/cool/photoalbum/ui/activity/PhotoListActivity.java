@@ -37,6 +37,9 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PhotoListActivity extends BaseActivity implements IPhotoListCallback, ISearchViewCallback {
     private RecyclerView mList_recycler_view;
     private IPhotoListPresenter mListPresenter;
@@ -44,7 +47,6 @@ public class PhotoListActivity extends BaseActivity implements IPhotoListCallbac
     private PhotoListAdapter mAdapter;
     private SmartRefreshLayout mSmartRefresh;
     private ISearchPresenter mSearchPresenter;
-    private AdView adView;
 
     @Override
     public int getLayoutResId() {
@@ -78,8 +80,6 @@ public class PhotoListActivity extends BaseActivity implements IPhotoListCallbac
 
         mTitleView = findViewById(R.id.nav_title_view);
 
-        adView = findViewById(R.id.ad_view);
-        adView.loadAd(new AdRequest.Builder().build());
     }
 
     @Override
@@ -179,13 +179,21 @@ public class PhotoListActivity extends BaseActivity implements IPhotoListCallbac
         if (mSmartRefresh != null) {
             mSmartRefresh.finishLoadMore();
         }
-        mAdapter.addData(contents.getFeeds());
+        mAdapter.addData(addAdData(contents));
     }
 
     @Override
     public void onContentLoaded(PhotoList contents) {
-        Log.d("TAG", "onContentLoaded: " + contents.getFeeds().toString());
-        mAdapter.setList(contents.getFeeds());
+        mAdapter.setList(addAdData(contents));
+    }
+
+    private List<PhotoList.FeedsBean> addAdData(PhotoList contents){
+        List<PhotoList.FeedsBean> mData = new ArrayList<>(contents.getFeeds());
+        PhotoList.FeedsBean feedsBean = new PhotoList.FeedsBean();
+        feedsBean.setHeader(true);
+        int position = mData.size() - 3 > 0 ? mData.size() - 3  : 0;
+        mData.add(position,feedsBean);
+        return mData;
     }
 
     @Override

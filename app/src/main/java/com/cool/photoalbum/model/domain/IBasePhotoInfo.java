@@ -2,7 +2,9 @@ package com.cool.photoalbum.model.domain;
 
 import android.os.Parcelable;
 
-public interface IBasePhotoInfo extends Parcelable {
+import com.chad.library.adapter.base.entity.SectionEntity;
+
+public interface IBasePhotoInfo extends Parcelable, SectionEntity {
 
     String smallUrl();
 

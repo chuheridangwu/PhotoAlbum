@@ -3,6 +3,7 @@ package com.cool.photoalbum.model.domain;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.chad.library.adapter.base.entity.SectionEntity;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -172,6 +173,22 @@ public class PhotoList {
         @Override
         public String bigUrl() {
             return image_large;
+        }
+
+        boolean isHeader;
+
+        public void setHeader(boolean header) {
+            isHeader = header;
+        }
+
+        @Override
+        public boolean isHeader() {
+            return isHeader;
+        }
+
+        @Override
+        public int getItemType() {
+            return isHeader ? SectionEntity.HEADER_TYPE : SectionEntity.NORMAL_TYPE;
         }
     }
 }

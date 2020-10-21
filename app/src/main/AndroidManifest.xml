@@ -9,6 +9,7 @@
 
 
     <application
+        android:requestLegacyExternalStorage="true"
         android:usesCleartextTraffic="true"
         android:name=".base.BaseApplication"
         android:allowBackup="true"

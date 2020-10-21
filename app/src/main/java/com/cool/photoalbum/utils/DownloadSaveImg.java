@@ -24,7 +24,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.UUID;
 
-public class DonwloadSaveImg {
+public class DownloadSaveImg {
     private static Context context;
     private static String filePath;
     private static Bitmap mBitmap;
@@ -32,7 +32,7 @@ public class DonwloadSaveImg {
     private final static String TAG = "PictureActivity";
     private static ProgressDialog mSaveDialog = null;
 
-    public static void donwloadImg(Context contexts, String filePaths) {
+    public static void downloadImg(Context contexts, String filePaths) {
         context = contexts;
         filePath = filePaths;
         mSaveDialog = ProgressDialog.show(context, contexts.getString(R.string.down_tip_save), contexts.getString(R.string.down_tip_save_tips), true);

@@ -1,19 +1,15 @@
 package com.cool.photoalbum.ui.activity;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,7 +24,7 @@ import com.cool.photoalbum.presenter.impl.ISavePhotoImpl;
 import com.cool.photoalbum.presenter.impl.ISearchPhotoImpl;
 import com.cool.photoalbum.ui.adapter.BrowseAdapter;
 import com.cool.photoalbum.utils.Constants;
-import com.cool.photoalbum.utils.DonwloadSaveImg;
+import com.cool.photoalbum.utils.DownloadSaveImg;
 import com.cool.photoalbum.utils.PushActivityUtil;
 import com.cool.photoalbum.utils.ToastUtils;
 import com.cool.photoalbum.viewCallback.IPhotoListCallback;
@@ -127,7 +123,7 @@ public class BrowseActivity extends AppCompatActivity implements IPhotoListCallb
             // 保存下载图片
             mSavePresenter.saveDownloadPhotoList(bean);
             // 下载
-            DonwloadSaveImg.donwloadImg(BrowseActivity.this,bean.smallUrl());//iPath
+            DownloadSaveImg.downloadImg(BrowseActivity.this,bean.smallUrl());//iPath
 
         });
 

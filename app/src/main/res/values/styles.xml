@@ -6,10 +6,13 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     </style>
 
-    <style name="SplashTheme" parent="AppTheme">
-        <item name="windowNoTitle">true</item><!--无标题-->
-        <item name="android:windowFullscreen">true</item><!--全屏-->
-        <item name="android:windowIsTranslucent">true</item><!--半透明-->
+    <style name="AppTheme.FullScreen">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="SplashTheme" parent="AppTheme.FullScreen">
+
     </style>
 
     <!--整个应用中用于对象在屏幕边缘的左右边距-->

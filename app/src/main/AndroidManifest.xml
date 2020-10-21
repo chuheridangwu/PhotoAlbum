@@ -22,9 +22,14 @@
         <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-3940256099942544~3347511713"></meta-data>
 
-        <activity android:name=".ui.activity.SplashActivity"
+        <activity  android:name=".ui.activity.SplashActivity"
             android:theme="@style/SplashTheme"
             >
+            <!--  适配华为刘海屏 -->
+            <meta-data
+                android:name="android.notch_support"
+                android:value="true" />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

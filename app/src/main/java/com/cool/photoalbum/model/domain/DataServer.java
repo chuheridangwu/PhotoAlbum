@@ -81,6 +81,19 @@ public class DataServer {
         list.add(category2);
         list.add(category8);
 
+        Category header0 = new Category(BaseApplication.getAppContext().getString(R.string.recommended),0,0);
+        header0.isHeader = true;
+        list.add(0,header0);
+
+        Category header1 = new Category("测试头部2",0,0);
+        header1.isHeader = true;
+        list.add(header1);
+
+        list.add(category0);
+
+        list.add(category2);
+        list.add(category8);
+
         return list;
     }
 }

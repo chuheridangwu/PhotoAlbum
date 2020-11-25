@@ -4,6 +4,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -17,6 +18,7 @@ import com.cool.photoalbum.base.BaseFragment;
 import com.cool.photoalbum.model.domain.DataServer;
 import com.cool.photoalbum.ui.adapter.HomeCategoryAdapter;
 import com.cool.photoalbum.ui.custom.TextFlowLayout;
+import com.cool.photoalbum.ui.decoration.GridSectionAverageGapItemDecoration;
 import com.cool.photoalbum.utils.AppAccessRequest;
 import com.cool.photoalbum.utils.GridSpacingItemDecoration;
 import com.cool.photoalbum.utils.PushActivityUtil;
@@ -37,16 +39,6 @@ public class HomeFragment extends BaseFragment {
     protected void initView(View rootView) {
         setUpState(State.SUCCESS);
 
-        mFlowLayout = rootView.findViewById(R.id.home_flow_text_view);
-        mFlowLayout.setTextList(DataServer.getRecommendTags());
-
-        mSearchEditText = rootView.findViewById(R.id.home_search_edit);
-        mClearEditTextBtn = rootView.findViewById(R.id.home_search_remove);
-
-        View view = rootView.findViewById(R.id.home_recommend_category_tip_view);
-        TextView textView = view.findViewById(R.id.section_text_view);
-        textView.setText(R.string.recommended);
-
         RecyclerView mRecyclerView = rootView.findViewById(R.id.home_recycler_view);
 
         GridLayoutManager manager = new GridLayoutManager(getContext(),3);
@@ -55,10 +47,24 @@ public class HomeFragment extends BaseFragment {
         mAdapter = new HomeCategoryAdapter();
         mRecyclerView.setAdapter(mAdapter);
 
-        int spanCount = 3; // 3 columns
-        int spacing = 15; // 50px
-        boolean includeEdge = true;
-        mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, includeEdge));
+//        int spanCount = 3; // 3 columns
+//        int spacing = 15; // 50px
+//        boolean includeEdge = true;
+//        mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, includeEdge));
+
+//      添加头部
+        View headView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_home_top,mRecyclerView,false);
+        mAdapter.addHeaderView(headView);
+
+        mFlowLayout = headView.findViewById(R.id.home_flow_text_view);
+        mFlowLayout.setTextList(DataServer.getRecommendTags());
+
+        mSearchEditText = headView.findViewById(R.id.home_search_edit);
+        mClearEditTextBtn = headView.findViewById(R.id.home_search_remove);
+
+//        View view = headView.findViewById(R.id.home_top_category_name);
+//        TextView textView = view.findViewById(R.id.section_text_view);
+//        textView.setText(R.string.recommended);
     }
 
     @Override

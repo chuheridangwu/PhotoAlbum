@@ -1,9 +1,13 @@
 package com.cool.photoalbum.model.domain;
 
-public class Category {
+import com.chad.library.adapter.base.entity.SectionEntity;
+
+public class Category implements SectionEntity {
+
     String title;
     int img;
     int channel;
+    boolean isHeader;
 
     public int getChannel() {
         return channel;
@@ -33,5 +37,19 @@ public class Category {
         this.title = title;
         this.img = img;
         this.channel = channel;
+    }
+
+    public void setHeader(boolean header) {
+        isHeader = header;
+    }
+
+    @Override
+    public boolean isHeader() {
+        return isHeader;
+    }
+
+    @Override
+    public int getItemType() {
+        return isHeader ? SectionEntity.HEADER_TYPE : SectionEntity.NORMAL_TYPE;
     }
 }

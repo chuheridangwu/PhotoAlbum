@@ -16,7 +16,7 @@ public class DataServer {
         List<Category> list = new ArrayList<>();
 
         if (AppAccessRequest.getInstall().isOpen()){
-            Category category1 = new Category(BaseApplication.getAppContext().getString(R.string.Beauty_car_model), R.mipmap.category_girl,2);
+            Category category1 = new Category(BaseApplication.getAppContext().getString(R.string.Beauty_car_model), R.mipmap.category_girl1,2);
             list.add(0,category1);
         }
 
@@ -69,26 +69,17 @@ public class DataServer {
         Category category0 = new Category(BaseApplication.getAppContext().getString(R.string.cute_animal), R.mipmap.home_recommend_animal,15);
         Category category8 = new Category(BaseApplication.getAppContext().getString(R.string.romantic_love), R.mipmap.home_recommend_avatar,4);
         Category category2 = new Category(BaseApplication.getAppContext().getString(R.string.cartoon_anime), R.mipmap.home_recommend_cartoons,6);
-        Category category9 = new Category(BaseApplication.getAppContext().getString(R.string.flowers), R.mipmap.home_recommend_plant,16);
-        Category category3 = new Category(BaseApplication.getAppContext().getString(R.string.wallpaper), R.mipmap.home_recommend_weather,6);
 
         Category category10 = new Category(BaseApplication.getAppContext().getString(R.string.gourmet), R.mipmap.home_recommend_food,19);
-        Category category11 = new Category(BaseApplication.getAppContext().getString(R.string.funny), R.mipmap.home_recommend_funny,20);
         Category category12 = new Category(BaseApplication.getAppContext().getString(R.string.lovely), R.mipmap.home_recommend_lovely,13);
-        Category category13 = new Category(BaseApplication.getAppContext().getString(R.string.beautiful_text), R.mipmap.home_recommend_text,17);
 
         list.add(category10);
         list.add(category12);
 
         list.add(category0);
-        list.add(category13);
 
         list.add(category2);
         list.add(category8);
-        list.add(category9);
-        list.add(category3);
-
-        list.add(category11);
 
         return list;
     }

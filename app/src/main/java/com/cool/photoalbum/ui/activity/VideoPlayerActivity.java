@@ -18,6 +18,7 @@ import com.cool.photoalbum.presenter.IPhotoListPresenter;
 import com.cool.photoalbum.presenter.ISearchPresenter;
 import com.cool.photoalbum.presenter.IVideoListPresenter;
 import com.cool.photoalbum.ui.adapter.PhotoListAdapter;
+import com.cool.photoalbum.ui.adapter.VideoListAdapter;
 import com.cool.photoalbum.utils.Constants;
 import com.cool.photoalbum.utils.PresentManager;
 import com.cool.photoalbum.utils.PushActivityUtil;
@@ -34,14 +35,12 @@ import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PhotoListActivity extends BaseActivity implements IPhotoListCallback, ISearchViewCallback, IVideoListCallBack {
+public class VideoListActivity extends BaseActivity implements IVideoListCallBack {
     private RecyclerView mList_recycler_view;
-    private IPhotoListPresenter mListPresenter;
+    private IVideoListPresenter mListPresenter;
     private TextView mTitleView;
-    private PhotoListAdapter mAdapter;
+    private VideoListAdapter mAdapter;
     private SmartRefreshLayout mSmartRefresh;
-    private ISearchPresenter mSearchPresenter;
-    private IVideoListPresenter mVideoPresenter; //视频列表
 
     @Override
     public int getLayoutResId() {
@@ -57,7 +56,7 @@ public class PhotoListActivity extends BaseActivity implements IPhotoListCallbac
         mList_recycler_view = findViewById(R.id.photo_list_recycler);
         mList_recycler_view.setLayoutManager(manager);
 
-        mAdapter = new PhotoListAdapter();
+        mAdapter = new VideoListAdapter();
         mAdapter.setAnimationEnable(true);
         mList_recycler_view.setAdapter(mAdapter);
         mList_recycler_view.addItemDecoration(new RecyclerView.ItemDecoration() {
@@ -82,31 +81,17 @@ public class PhotoListActivity extends BaseActivity implements IPhotoListCallbac
         if (mListPresenter != null) {
             mListPresenter.unregisterViewCallback(this);
         }
-
-        if (mSearchPresenter != null) {
-            mSearchPresenter.unregisterViewCallback(this);
-        }
-        if (mVideoPresenter != null){
-            mVideoPresenter.unregisterViewCallback(this);
-        }
     }
 
     @Override
     protected void initPresenter() {
-        mListPresenter = PresentManager.getInstance().getmIPhotoListPresenter();
+        mListPresenter = PresentManager.getInstance().getmVideoPresenter();
         mListPresenter.registerViewCallback(this);
-
-        mSearchPresenter = PresentManager.getInstance().getmSearchPresenter();
-        mSearchPresenter.registerViewCallback(this);
-
-        mVideoPresenter = PresentManager.getInstance().getmVideoPresenter();
-        mVideoPresenter.registerViewCallback(this);
 
         mSmartRefresh.setRefreshFooter(new ClassicsFooter(this));
 
         // 设置标题
-        if (PushActivityUtil.photoActivityType == PushActivityUtil.PhotoActivityType.PHOTO_ACTIVITY_TYPE_CATEGORY
-            || PushActivityUtil.photoActivityType == PushActivityUtil.PhotoActivityType.PHOTO_ACTIVITY_TYPE_VIDEO_PHOTO ) {
+        if (PushActivityUtil.photoActivityType == PushActivityUtil.PhotoActivityType.PHOTO_ACTIVITY_TYPE_CATEGORY) {
             String categoryName = getIntent().getStringExtra(Constants.KEY_PHOTO_PAGER_CATEGORY_NAME);
             mTitleView.setText(categoryName);
         } else {
@@ -124,20 +109,11 @@ public class PhotoListActivity extends BaseActivity implements IPhotoListCallbac
             PushActivityUtil.toBrowseActivity(getApplicationContext(), mAdapter.getData(), position, categoryId, keyboard);
         });
 
-        //  上拉加载更多
         mSmartRefresh.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                if (PushActivityUtil.photoActivityType == PushActivityUtil.PhotoActivityType.PHOTO_ACTIVITY_TYPE_CATEGORY) {
-                    int categoryId = getIntent().getIntExtra(Constants.KEY_PHOTO_PAGER_CATEGORY_ID, 1);
-                    mListPresenter.loaderMore(categoryId);
-                } else if(PushActivityUtil.photoActivityType == PushActivityUtil.PhotoActivityType.PHOTO_ACTIVITY_TYPE_SEARCH){
-                    String keyboard = getIntent().getStringExtra(Constants.KEY_PHOTO_PAGER_KEYBOARD);
-                    mSearchPresenter.loadMoreResult(keyboard);
-                }else {
-                    int categoryId = getIntent().getIntExtra(Constants.KEY_PHOTO_PAGER_CATEGORY_ID, 1);
-                    mVideoPresenter.loaderMore(categoryId);
-                }
+                int categoryId = getIntent().getIntExtra(Constants.KEY_PHOTO_PAGER_CATEGORY_ID, 1);
+                mListPresenter.loaderMore(categoryId);
             }
         });
 
@@ -179,37 +155,12 @@ public class PhotoListActivity extends BaseActivity implements IPhotoListCallbac
 
     @Override
     public void onLoadMoreLoaded(List<VideoList> contents) {
-        if (mSmartRefresh != null) {
-            mSmartRefresh.finishLoadMore();
-        }
-            mAdapter.addData(addAdVideoData(contents));
+
     }
 
     @Override
     public void onContentLoaded(List<VideoList> contents) {
-        mAdapter.setList(addAdVideoData(contents));
-    }
 
-    private List<VideoList> addAdVideoData(List<VideoList> contents) {
-        List<VideoList> mData = new ArrayList<>(contents);
-        VideoList feedsBean = new VideoList();
-        feedsBean.setHeader(true);
-        int position = Math.max(mData.size() - 3, 0);
-        mData.add(position, feedsBean);
-        return mData;
-    }
-
-    @Override
-    public void onLoadMoreLoaded(PhotoList contents) {
-        if (mSmartRefresh != null) {
-            mSmartRefresh.finishLoadMore();
-        }
-        mAdapter.addData(addAdData(contents));
-    }
-
-    @Override
-    public void onContentLoaded(PhotoList contents) {
-        mAdapter.setList(addAdData(contents));
     }
 
     private List<PhotoList.FeedsBean> addAdData(PhotoList contents) {
@@ -219,20 +170,6 @@ public class PhotoListActivity extends BaseActivity implements IPhotoListCallbac
         int position = Math.max(mData.size() - 3, 0);
         mData.add(position, feedsBean);
         return mData;
-    }
-
-    @Override
-    public void onLoadMoreLoaded(SearchResult contents) {
-        if (mSmartRefresh != null) {
-            mSmartRefresh.finishLoadMore();
-        }
-        mAdapter.addData(addAdSearchData(contents));
-    }
-
-    @Override
-    public void onContentLoaded(SearchResult contents) {
-
-        mAdapter.setList(addAdSearchData(contents));
     }
 
     private List<SearchResult.ItemsBean> addAdSearchData(SearchResult contents) {

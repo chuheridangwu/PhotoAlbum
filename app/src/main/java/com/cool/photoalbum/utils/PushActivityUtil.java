@@ -9,6 +9,7 @@ import com.cool.photoalbum.model.domain.IBasePhotoInfo;
 import com.cool.photoalbum.model.domain.PhotoList;
 import com.cool.photoalbum.presenter.IPhotoListPresenter;
 import com.cool.photoalbum.presenter.ISearchPresenter;
+import com.cool.photoalbum.presenter.IVideoListPresenter;
 import com.cool.photoalbum.ui.activity.BrowseActivity;
 import com.cool.photoalbum.ui.activity.DownloadActivity;
 import com.cool.photoalbum.ui.activity.PhotoListActivity;
@@ -22,7 +23,8 @@ public class PushActivityUtil {
         PHOTO_ACTIVITY_TYPE_CATEGORY, //分类
         PHOTO_ACTIVITY_TYPE_SEARCH, // 搜索
        PHOTO_ACTIVITY_TYPE_FOLLOW, // 关注
-    }
+       PHOTO_ACTIVITY_TYPE_VIDEO_PHOTO, // 视频列表
+   }
 
     public static PhotoActivityType photoActivityType = PhotoActivityType.PHOTO_ACTIVITY_TYPE_CATEGORY;
 
@@ -61,6 +63,17 @@ public class PushActivityUtil {
         intent.putParcelableArrayListExtra(Constants.KEY_FEED_BEAN_LIST, (ArrayList<? extends Parcelable>) new ArrayList<IBasePhotoInfo>(photos));
         intent.putExtra(Constants.KEY_FEED_BEAN_LIST_POSITION,index);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
+    public static void homeToVideoPhotoListPage(Context context, Category category){
+        int categoryId = category.getChannel();
+        IVideoListPresenter videoListPresent = PresentManager.getInstance().getmVideoPresenter();
+        videoListPresent.getCategoryContent(categoryId);
+        Intent intent = new Intent(context,PhotoListActivity.class);
+        intent.putExtra(Constants.KEY_PHOTO_PAGER_CATEGORY_ID,categoryId);
+        intent.putExtra(Constants.KEY_PHOTO_PAGER_CATEGORY_NAME,category.getTitle());
+        photoActivityType = PhotoActivityType.PHOTO_ACTIVITY_TYPE_VIDEO_PHOTO;
         context.startActivity(intent);
     }
 

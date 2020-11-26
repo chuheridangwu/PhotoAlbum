@@ -3,7 +3,9 @@ package com.cool.photoalbum.model;
 import com.cool.photoalbum.model.domain.Access;
 import com.cool.photoalbum.model.domain.PhotoList;
 import com.cool.photoalbum.model.domain.SearchResult;
+import com.cool.photoalbum.model.domain.VideoList;
 
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.Response;
@@ -25,4 +27,7 @@ public interface Api {
     // 搜索结果
     @GET("pics")
     Call<SearchResult> getSearchResult(@QueryMap Map<String,String> params);
+
+    @GET("acg/acg.php")
+    Call<List<VideoList>> getVideoListResult(@QueryMap Map<String,String> params);
 }

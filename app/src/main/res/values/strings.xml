@@ -48,4 +48,7 @@
     <string name="down_tip_save_tips">The picture is being saved, please wait...</string>
     <string name="down_tip_authority">Please activate relevant permissions, otherwise you cannot use this application normally</string>
     <string name="down_tip_authority_success">Authorization succeeded</string>
+    <string name="home_new">New</string>
+    <string name="home_hot">Hot</string>
+    <string name="home_rec">Recommend</string>
 </resources>

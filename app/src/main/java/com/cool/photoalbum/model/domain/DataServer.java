@@ -61,9 +61,24 @@ public class DataServer {
     public static List<Category> getRecommendCategory(){
         List<Category> list = new ArrayList<>();
 
+        Category header1 = new Category("ACG",0,0);
+        header1.isHeader = true;
+        list.add(header1);
+
+        Category category_1 = new Category(BaseApplication.getAppContext().getString(R.string.home_hot), R.mipmap.home_rec_animal_1,100);
+        Category category_2 = new Category(BaseApplication.getAppContext().getString(R.string.home_new), R.mipmap.home_rec_animal_2,101);
+        Category category_3 = new Category(BaseApplication.getAppContext().getString(R.string.home_rec), R.mipmap.home_rec_animal_3,102);
+        list.add(category_1);
+        list.add(category_2);
+        list.add(category_3);
+
+        Category header0 = new Category(BaseApplication.getAppContext().getString(R.string.recommended),0,0);
+        header0.isHeader = true;
+        list.add(header0);
+
         if (AppAccessRequest.getInstall().isOpen()){
             Category category1 = new Category(BaseApplication.getAppContext().getString(R.string.Beauty_car_model), R.mipmap.home_recommend_beauty,2);
-            list.add(0,category1);
+            list.add(5,category1);
         }
 
         Category category0 = new Category(BaseApplication.getAppContext().getString(R.string.cute_animal), R.mipmap.home_recommend_animal,15);
@@ -75,19 +90,6 @@ public class DataServer {
 
         list.add(category10);
         list.add(category12);
-
-        list.add(category0);
-
-        list.add(category2);
-        list.add(category8);
-
-        Category header0 = new Category(BaseApplication.getAppContext().getString(R.string.recommended),0,0);
-        header0.isHeader = true;
-        list.add(0,header0);
-
-        Category header1 = new Category("测试头部2",0,0);
-        header1.isHeader = true;
-        list.add(header1);
 
         list.add(category0);
 

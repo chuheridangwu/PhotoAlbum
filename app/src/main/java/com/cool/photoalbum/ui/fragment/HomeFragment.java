@@ -10,11 +10,15 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.cool.photoalbum.R;
 import com.cool.photoalbum.base.BaseFragment;
+import com.cool.photoalbum.model.domain.Category;
 import com.cool.photoalbum.model.domain.DataServer;
 import com.cool.photoalbum.ui.adapter.HomeCategoryAdapter;
 import com.cool.photoalbum.ui.custom.TextFlowLayout;
@@ -117,7 +121,17 @@ public class HomeFragment extends BaseFragment {
 
         // 监听item的点击
         mAdapter.addChildClickViewIds(R.id.item_home_category_image_view);
-        mAdapter.setOnItemChildClickListener((adapter, view, position) -> PushActivityUtil.toPhotoListPage(getContext(), DataServer.getRecommendCategory().get(position)));
+        mAdapter.setOnItemChildClickListener(new OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
+                Category category = DataServer.getRecommendCategory().get(position);
+                if (category.getChannel() >= 100){
+                    PushActivityUtil.homeToVideoPhotoListPage(getContext(), category);
+                }else {
+                    PushActivityUtil.toPhotoListPage(getContext(), category);
+                }
+            }
+        });
 
         AppAccessRequest.getInstall().setOnAccessResultListener(() -> mAdapter.setList(DataServer.getRecommendCategory()));
     }

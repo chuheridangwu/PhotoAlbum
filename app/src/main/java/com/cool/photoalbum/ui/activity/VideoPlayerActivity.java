@@ -1,203 +1,94 @@
 package com.cool.photoalbum.ui.activity;
 
+import android.content.Intent;
 import android.graphics.Rect;
 import android.view.View;
+import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.cool.photoalbum.R;
 import com.cool.photoalbum.base.BaseActivity;
-import com.cool.photoalbum.model.domain.PhotoList;
-import com.cool.photoalbum.model.domain.SearchResult;
-import com.cool.photoalbum.model.domain.VideoList;
-import com.cool.photoalbum.presenter.IPhotoListPresenter;
-import com.cool.photoalbum.presenter.ISearchPresenter;
-import com.cool.photoalbum.presenter.IVideoListPresenter;
-import com.cool.photoalbum.ui.adapter.PhotoListAdapter;
-import com.cool.photoalbum.ui.adapter.VideoListAdapter;
+import com.cool.photoalbum.model.domain.IBasePhotoInfo;
+import com.cool.photoalbum.ui.adapter.BrowseAdapter;
+import com.cool.photoalbum.ui.adapter.VideoPlayerAdapter;
 import com.cool.photoalbum.utils.Constants;
-import com.cool.photoalbum.utils.PresentManager;
-import com.cool.photoalbum.utils.PushActivityUtil;
 import com.cool.photoalbum.utils.SizeUtils;
-import com.cool.photoalbum.utils.ToastUtils;
-import com.cool.photoalbum.viewCallback.IPhotoListCallback;
-import com.cool.photoalbum.viewCallback.ISearchViewCallback;
-import com.cool.photoalbum.viewCallback.IVideoListCallBack;
-import com.scwang.smart.refresh.footer.ClassicsFooter;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
-import com.scwang.smart.refresh.layout.api.RefreshLayout;
-import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class VideoListActivity extends BaseActivity implements IVideoListCallBack {
-    private RecyclerView mList_recycler_view;
-    private IVideoListPresenter mListPresenter;
-    private TextView mTitleView;
-    private VideoListAdapter mAdapter;
-    private SmartRefreshLayout mSmartRefresh;
+public class VideoPlayerActivity extends BaseActivity {
+    private RecyclerView mRecyclerView;
+    private VideoPlayerAdapter mAdapter;
+    private int mCurrentPosition;
+    private ImageView mImageView;
+    private List<IBasePhotoInfo> dataList;
 
     @Override
     public int getLayoutResId() {
-        return R.layout.activity_photo_list;
+        return R.layout.activity_video_player;
     }
 
     @Override
     protected void initView() {
-        GridLayoutManager manager = new GridLayoutManager(this, 3);
-        manager.offsetChildrenVertical(5);
-        manager.offsetChildrenHorizontal(5);
 
-        mList_recycler_view = findViewById(R.id.photo_list_recycler);
-        mList_recycler_view.setLayoutManager(manager);
+        mImageView = findViewById(R.id.video_player_img);
+        mRecyclerView= findViewById(R.id.video_player_recycler);
 
-        mAdapter = new VideoListAdapter();
-        mAdapter.setAnimationEnable(true);
-        mList_recycler_view.setAdapter(mAdapter);
-        mList_recycler_view.addItemDecoration(new RecyclerView.ItemDecoration() {
-            @Override
-            public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
-                super.getItemOffsets(outRect, view, parent, state);
-                outRect.left = SizeUtils.dip2px(getApplicationContext(), 3);
-                outRect.right = SizeUtils.dip2px(getApplicationContext(), 3);
-                outRect.bottom = SizeUtils.dip2px(getApplicationContext(), 3);
-            }
-        });
+        // 设置分页
+        PagerSnapHelper snapHelper = new PagerSnapHelper();
+        snapHelper.attachToRecyclerView(mRecyclerView);
 
-        // 刷新
-        mSmartRefresh = findViewById(R.id.photo_list_refresh);
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        manager.setOrientation(LinearLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(manager);
 
-        mTitleView = findViewById(R.id.nav_title_view);
+        mRecyclerView.setAdapter(mAdapter);
 
+        mAdapter = new VideoPlayerAdapter();
+        Intent intent = getIntent();
+        dataList = intent.getParcelableArrayListExtra(Constants.KEY_FEED_BEAN_LIST);
+        mCurrentPosition = intent.getIntExtra(Constants.KEY_FEED_BEAN_LIST_POSITION,0);
+        mAdapter.setList(dataList);
+
+        IBasePhotoInfo info = dataList.get(mCurrentPosition);
+        Glide.with(this).load(info.smallUrl()).into(mImageView);
     }
 
     @Override
     protected void release() {
-        if (mListPresenter != null) {
-            mListPresenter.unregisterViewCallback(this);
-        }
+
     }
 
     @Override
     protected void initPresenter() {
-        mListPresenter = PresentManager.getInstance().getmVideoPresenter();
-        mListPresenter.registerViewCallback(this);
 
-        mSmartRefresh.setRefreshFooter(new ClassicsFooter(this));
-
-        // 设置标题
-        if (PushActivityUtil.photoActivityType == PushActivityUtil.PhotoActivityType.PHOTO_ACTIVITY_TYPE_CATEGORY) {
-            String categoryName = getIntent().getStringExtra(Constants.KEY_PHOTO_PAGER_CATEGORY_NAME);
-            mTitleView.setText(categoryName);
-        } else {
-            String keyboard = getIntent().getStringExtra(Constants.KEY_PHOTO_PAGER_KEYBOARD);
-            mTitleView.setText(keyboard);
-        }
     }
 
     @Override
     protected void initEvent() {
-        mAdapter.addChildClickViewIds(R.id.photo_list_item_img_view);
-        mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            int categoryId = getIntent().getIntExtra(Constants.KEY_PHOTO_PAGER_CATEGORY_ID, 1);
-            String keyboard = getIntent().getStringExtra(Constants.KEY_PHOTO_PAGER_KEYBOARD);
-            PushActivityUtil.toBrowseActivity(getApplicationContext(), mAdapter.getData(), position, categoryId, keyboard);
-        });
-
-        mSmartRefresh.setOnLoadMoreListener(new OnLoadMoreListener() {
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                int categoryId = getIntent().getIntExtra(Constants.KEY_PHOTO_PAGER_CATEGORY_ID, 1);
-                mListPresenter.loaderMore(categoryId);
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == RecyclerView.SCROLL_INDICATOR_END){
+                    int index = ((LinearLayoutManager)recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+                    IBasePhotoInfo info = dataList.get(mCurrentPosition);
+                    Glide.with(getBaseContext()).load(info.smallUrl()).into(mImageView);
+                }
             }
-        });
 
-        // 返回上一个界面
-        ImageView backView = findViewById(R.id.nav_back);
-        backView.setVisibility(View.VISIBLE);
-        backView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-        // 返回顶部
-        ImageView topArrow = findViewById(R.id.photo_list_top_arrow);
-        topArrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mList_recycler_view.smoothScrollToPosition(0);
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
             }
         });
     }
 
-    @Override
-    public void onLoadMoreError() {
-        if (mSmartRefresh != null) {
-            mSmartRefresh.finishLoadMore();
-        }
-        ToastUtils.showToast("加载更多失败");
-    }
-
-    @Override
-    public void onLoadMoreEmpty() {
-        if (mSmartRefresh != null) {
-            mSmartRefresh.finishLoadMore();
-        }
-        ToastUtils.showToast("没有更多数据了");
-    }
-
-    @Override
-    public void onLoadMoreLoaded(List<VideoList> contents) {
-
-    }
-
-    @Override
-    public void onContentLoaded(List<VideoList> contents) {
-
-    }
-
-    private List<PhotoList.FeedsBean> addAdData(PhotoList contents) {
-        List<PhotoList.FeedsBean> mData = new ArrayList<>(contents.getFeeds());
-        PhotoList.FeedsBean feedsBean = new PhotoList.FeedsBean();
-        feedsBean.setHeader(true);
-        int position = Math.max(mData.size() - 3, 0);
-        mData.add(position, feedsBean);
-        return mData;
-    }
-
-    private List<SearchResult.ItemsBean> addAdSearchData(SearchResult contents) {
-        List<SearchResult.ItemsBean> mData = new ArrayList<>(contents.getItems());
-        SearchResult.ItemsBean feedsBean = new SearchResult.ItemsBean();
-        feedsBean.setHeader(true);
-        int position = Math.max(mData.size() - 3, 0);
-        mData.add(position, feedsBean);
-        return mData;
-    }
-
-    @Override
-    public int getStartPosition() {
-        return 0;
-    }
-
-    @Override
-    public void onError() {
-
-    }
-
-    @Override
-    public void onLoading() {
-
-    }
-
-    @Override
-    public void onEmpty() {
-
-    }
 }

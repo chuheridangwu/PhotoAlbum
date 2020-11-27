@@ -7,12 +7,14 @@ import android.os.Parcelable;
 import com.cool.photoalbum.model.domain.Category;
 import com.cool.photoalbum.model.domain.IBasePhotoInfo;
 import com.cool.photoalbum.model.domain.PhotoList;
+import com.cool.photoalbum.model.domain.VideoList;
 import com.cool.photoalbum.presenter.IPhotoListPresenter;
 import com.cool.photoalbum.presenter.ISearchPresenter;
 import com.cool.photoalbum.presenter.IVideoListPresenter;
 import com.cool.photoalbum.ui.activity.BrowseActivity;
 import com.cool.photoalbum.ui.activity.DownloadActivity;
 import com.cool.photoalbum.ui.activity.PhotoListActivity;
+import com.cool.photoalbum.ui.activity.VideoPlayerActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,6 +81,13 @@ public class PushActivityUtil {
 
     public static void toDownloadActivity(Context context){
         Intent intent = new Intent(context,DownloadActivity.class);
+        context.startActivity(intent);
+    }
+
+    public static void toVideoPlayerActivity(Context context, List<IBasePhotoInfo>  videoLists, int index){
+        Intent intent = new Intent(context, VideoPlayerActivity.class);
+        intent.putExtra(Constants.KEY_FEED_BEAN_LIST_POSITION,index);
+        intent.putParcelableArrayListExtra(Constants.KEY_FEED_BEAN_LIST, (ArrayList<? extends Parcelable>) videoLists);
         context.startActivity(intent);
     }
 }

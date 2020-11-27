@@ -1,6 +1,9 @@
 package com.cool.photoalbum.model.domain;
 
+import android.os.Build;
 import android.os.Parcel;
+
+import androidx.annotation.RequiresApi;
 
 import com.chad.library.adapter.base.entity.SectionEntity;
 
@@ -988,12 +991,18 @@ public class SearchResult {
             return ori_pic_url.isEmpty() ? thumbUrl : ori_pic_url;
         }
 
+        @Override
+        public String videoUrl() {
+            return null;
+        }
+
 
         @Override
         public int describeContents() {
             return 0;
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.Q)
         @Override
         public void writeToParcel(Parcel dest, int flags) {
             dest.writeInt(this.type);
@@ -1074,6 +1083,7 @@ public class SearchResult {
         public ItemsBean() {
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.Q)
         protected ItemsBean(Parcel in) {
             this.type = in.readInt();
             this.cacheIndex = in.readInt();
@@ -1152,6 +1162,7 @@ public class SearchResult {
         }
 
         public static final Creator<ItemsBean> CREATOR = new Creator<ItemsBean>() {
+            @RequiresApi(api = Build.VERSION_CODES.Q)
             @Override
             public ItemsBean createFromParcel(Parcel source) {
                 return new ItemsBean(source);

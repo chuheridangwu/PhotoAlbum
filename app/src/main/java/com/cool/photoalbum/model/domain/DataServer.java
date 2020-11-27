@@ -78,7 +78,7 @@ public class DataServer {
 
         if (AppAccessRequest.getInstall().isOpen()){
             Category category1 = new Category(BaseApplication.getAppContext().getString(R.string.Beauty_car_model), R.mipmap.home_recommend_beauty,2);
-            list.add(5,category1);
+            list.add(category1);
         }
 
         Category category0 = new Category(BaseApplication.getAppContext().getString(R.string.cute_animal), R.mipmap.home_recommend_animal,15);

@@ -9,4 +9,6 @@ public interface IBasePhotoInfo extends Parcelable, SectionEntity {
     String smallUrl();
 
     String bigUrl();
+
+    String videoUrl();
 }

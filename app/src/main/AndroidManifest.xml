@@ -42,6 +42,7 @@
         <activity
             android:name=".ui.activity.BrowseActivity"></activity>
         <activity android:name=".ui.activity.DownloadActivity"></activity>
+        <activity android:name=".ui.activity.VideoPlayerActivity"></activity>
     </application>
 
 </manifest>

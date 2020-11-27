@@ -1,7 +1,10 @@
 package com.cool.photoalbum.model.domain;
 
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import androidx.annotation.RequiresApi;
 
 import com.chad.library.adapter.base.entity.SectionEntity;
 import com.google.gson.annotations.SerializedName;
@@ -129,6 +132,7 @@ public class PhotoList {
             return 0;
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.Q)
         @Override
         public void writeToParcel(Parcel dest, int flags) {
             dest.writeString(this.fid);
@@ -144,6 +148,7 @@ public class PhotoList {
         public FeedsBean() {
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.Q)
         protected FeedsBean(Parcel in) {
             this.fid = in.readString();
             this.image_large = in.readString();
@@ -156,6 +161,7 @@ public class PhotoList {
         }
 
         public static final Parcelable.Creator<FeedsBean> CREATOR = new Parcelable.Creator<FeedsBean>() {
+            @RequiresApi(api = Build.VERSION_CODES.Q)
             @Override
             public FeedsBean createFromParcel(Parcel source) {
                 return new FeedsBean(source);
@@ -175,6 +181,11 @@ public class PhotoList {
         @Override
         public String bigUrl() {
             return image_large;
+        }
+
+        @Override
+        public String videoUrl() {
+            return null;
         }
 
         boolean isHeader;

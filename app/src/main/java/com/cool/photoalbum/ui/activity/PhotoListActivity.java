@@ -119,9 +119,14 @@ public class PhotoListActivity extends BaseActivity implements IPhotoListCallbac
     protected void initEvent() {
         mAdapter.addChildClickViewIds(R.id.photo_list_item_img_view);
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            int categoryId = getIntent().getIntExtra(Constants.KEY_PHOTO_PAGER_CATEGORY_ID, 1);
-            String keyboard = getIntent().getStringExtra(Constants.KEY_PHOTO_PAGER_KEYBOARD);
-            PushActivityUtil.toBrowseActivity(getApplicationContext(), mAdapter.getData(), position, categoryId, keyboard);
+            if (PushActivityUtil.photoActivityType == PushActivityUtil.PhotoActivityType.PHOTO_ACTIVITY_TYPE_VIDEO_PHOTO){
+                PushActivityUtil.toVideoPlayerActivity(getApplicationContext(),mAdapter.getData(),position);
+            }else {
+                int categoryId = getIntent().getIntExtra(Constants.KEY_PHOTO_PAGER_CATEGORY_ID, 1);
+                String keyboard = getIntent().getStringExtra(Constants.KEY_PHOTO_PAGER_KEYBOARD);
+                PushActivityUtil.toBrowseActivity(getApplicationContext(), mAdapter.getData(), position, categoryId, keyboard);
+            }
+
         });
 
         //  上拉加载更多

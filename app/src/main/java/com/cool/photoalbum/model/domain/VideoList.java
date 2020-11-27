@@ -1,9 +1,11 @@
 package com.cool.photoalbum.model.domain;
 
+import android.annotation.SuppressLint;
 import android.os.Parcel;
 
 import com.chad.library.adapter.base.entity.SectionEntity;
 
+@SuppressLint("ParcelCreator")
 public class VideoList implements IBasePhotoInfo {
 
     /**
@@ -351,13 +353,8 @@ public class VideoList implements IBasePhotoInfo {
     }
 
     @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-
+    public String videoUrl() {
+        return video;
     }
 
     boolean isHeader;
@@ -451,4 +448,99 @@ public class VideoList implements IBasePhotoInfo {
             this.id = id;
         }
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.set);
+//        dest.writeParcelable(this.uid, flags);
+        dest.writeByte(this.opensearch ? (byte) 1 : (byte) 0);
+        dest.writeString(this.shareurl);
+        dest.writeInt(this.share);
+        dest.writeInt(this.height);
+        dest.writeInt(this.download);
+        dest.writeInt(this.bit_rate);
+        dest.writeString(this.tag);
+        dest.writeString(this.video);
+        dest.writeInt(this.duration);
+        dest.writeInt(this.click);
+        dest.writeInt(this.favnum);
+        dest.writeString(this.category);
+        dest.writeString(this.img);
+        dest.writeString(this.privacy);
+//        dest.writeParcelable(this.user, flags);
+        dest.writeString(this.clickurl);
+        dest.writeString(this.id);
+        dest.writeInt(this.width);
+        dest.writeInt(this.play);
+        dest.writeString(this.favoriteurl);
+        dest.writeString(this.downloadurl);
+        dest.writeString(this.view_video);
+        dest.writeByte(this.adult ? (byte) 1 : (byte) 0);
+        dest.writeString(this.atime);
+//        dest.writeParcelable(this.desc, flags);
+        dest.writeString(this.name);
+        dest.writeString(this.viewurl);
+        dest.writeInt(this.favorite);
+        dest.writeString(this.seturl);
+        dest.writeString(this.playurl);
+        dest.writeInt(this.view);
+        dest.writeByte(this.isHeader ? (byte) 1 : (byte) 0);
+    }
+
+    public VideoList() {
+    }
+
+    protected VideoList(Parcel in) {
+        this.set = in.readInt();
+//        this.uid = in.readParcelable(Object.class.getClassLoader());
+        this.opensearch = in.readByte() != 0;
+        this.shareurl = in.readString();
+        this.share = in.readInt();
+        this.height = in.readInt();
+        this.download = in.readInt();
+        this.bit_rate = in.readInt();
+        this.tag = in.readString();
+        this.video = in.readString();
+        this.duration = in.readInt();
+        this.click = in.readInt();
+        this.favnum = in.readInt();
+        this.category = in.readString();
+        this.img = in.readString();
+        this.privacy = in.readString();
+//        this.user = in.readParcelable(UserBean.class.getClassLoader());
+        this.clickurl = in.readString();
+        this.id = in.readString();
+        this.width = in.readInt();
+        this.play = in.readInt();
+        this.favoriteurl = in.readString();
+        this.downloadurl = in.readString();
+        this.view_video = in.readString();
+        this.adult = in.readByte() != 0;
+        this.atime = in.readString();
+//        this.desc = in.readParcelable(Object.class.getClassLoader());
+        this.name = in.readString();
+        this.viewurl = in.readString();
+        this.favorite = in.readInt();
+        this.seturl = in.readString();
+        this.playurl = in.readString();
+        this.view = in.readInt();
+        this.isHeader = in.readByte() != 0;
+    }
+
+    public static final Creator<VideoList> CREATOR = new Creator<VideoList>() {
+        @Override
+        public VideoList createFromParcel(Parcel source) {
+            return new VideoList(source);
+        }
+
+        @Override
+        public VideoList[] newArray(int size) {
+            return new VideoList[size];
+        }
+    };
 }

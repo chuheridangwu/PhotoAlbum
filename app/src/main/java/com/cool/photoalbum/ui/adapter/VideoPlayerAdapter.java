@@ -29,32 +29,19 @@ import java.util.ArrayList;
 
 public class VideoPlayerAdapter extends BaseSectionQuickAdapter<IBasePhotoInfo, BaseViewHolder> {
     public VideoPlayerAdapter(){
-        super(R.layout.item_browse_ad_view,R.layout.item_browse_view,new ArrayList<>());
+        super(R.layout.item_browse_ad_view,R.layout.item_player_video_view,new ArrayList<>());
     }
     @Override
     protected void convert(@NotNull BaseViewHolder baseViewHolder, IBasePhotoInfo feedsBean) {
-        PhotoView imageView = baseViewHolder.getView(R.id.browse_item_photo_view);
-        ProgressBar progressBar = baseViewHolder.getView(R.id.browse_progress_bar);
-        progressBar.setVisibility(View.VISIBLE);
-        Glide.with(getContext()).load(feedsBean.bigUrl()).into(new CustomTarget<Drawable>() {
-            @Override
-            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                imageView.setImageDrawable(resource);
-                imageView.buildDrawingCache();
-                progressBar.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onLoadCleared(@Nullable Drawable placeholder) {
-
-            }
-        });
+        ImageView imageView = baseViewHolder.getView(R.id.item_play_photo_view);
+        Glide.with(getContext()).load(feedsBean.bigUrl()).into(imageView);
 
         // 加载广告
         if (getItemPosition(feedsBean) % 5 == 0){
             AdView adView = baseViewHolder.getView(R.id.ad_view);
             adView.loadAd(new AdRequest.Builder().build());
         }
+        baseViewHolder.itemView.setTag(baseViewHolder.getAdapterPosition());
     }
 
     @Override

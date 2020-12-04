@@ -61,7 +61,7 @@ public class DataServer {
     public static List<Category> getRecommendCategory(){
         List<Category> list = new ArrayList<>();
 
-        Category header1 = new Category("ACG",0,0);
+        Category header1 = new Category(BaseApplication.getAppContext().getString(R.string.home_acg),0,0);
         header1.isHeader = true;
         list.add(header1);
 

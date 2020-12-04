@@ -125,9 +125,11 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onItemChildClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
                 Category category = DataServer.getRecommendCategory().get(position);
-                if (category.getChannel() >= 100){
+                if (category.getChannel() >= 100 && category.getChannel() < 200){
                     PushActivityUtil.homeToVideoPhotoListPage(getContext(), category);
-                }else {
+                }else if (category.getChannel() >= 200){
+                    PushActivityUtil.toLiveListActivity(getContext(), category);
+                }else{
                     PushActivityUtil.toPhotoListPage(getContext(), category);
                 }
             }

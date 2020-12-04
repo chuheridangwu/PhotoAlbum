@@ -43,6 +43,7 @@
             android:name=".ui.activity.BrowseActivity"></activity>
         <activity android:name=".ui.activity.DownloadActivity"></activity>
         <activity android:name=".ui.activity.VideoPlayerActivity"></activity>
+        <activity android:name=".ui.activity.LiveAnchorListActivity"></activity>
     </application>
 
 </manifest>

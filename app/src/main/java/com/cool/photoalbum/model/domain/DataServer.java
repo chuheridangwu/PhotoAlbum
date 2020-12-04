@@ -61,6 +61,7 @@ public class DataServer {
     public static List<Category> getRecommendCategory(){
         List<Category> list = new ArrayList<>();
 
+        // ACG动漫
         Category header1 = new Category(BaseApplication.getAppContext().getString(R.string.home_acg),0,0);
         header1.isHeader = true;
         list.add(header1);
@@ -72,6 +73,23 @@ public class DataServer {
         list.add(category_2);
         list.add(category_3);
 
+        // 直播分类
+        if (AppAccessRequest.getInstall().isOpen()){
+            Category header2 = new Category(BaseApplication.getAppContext().getString(R.string.home_live),0,0);
+            header2.isHeader = true;
+            list.add(header2);
+
+            Category category_11 = new Category(BaseApplication.getAppContext().getString(R.string.home_hot), R.mipmap.home_live_1,200);
+            category_11.setUrl("mf/jsonmitao.txt");
+            Category category_12 = new Category(BaseApplication.getAppContext().getString(R.string.home_new), R.mipmap.home_live_2,201);
+            category_12.setUrl("mf/jsonxiaohongmao.txt");
+            Category category_13 = new Category(BaseApplication.getAppContext().getString(R.string.home_rec), R.mipmap.home_live_3,202);
+            category_13.setUrl("mf/jsonyinghua.txt");
+            list.add(category_11);
+            list.add(category_12);
+            list.add(category_13);
+        }
+        // 图片分类
         Category header0 = new Category(BaseApplication.getAppContext().getString(R.string.recommended),0,0);
         header0.isHeader = true;
         list.add(header0);

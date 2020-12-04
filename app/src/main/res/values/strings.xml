@@ -52,4 +52,6 @@
     <string name="home_hot">Hot</string>
     <string name="home_rec">Recommend</string>
     <string name="home_acg">ACG</string>
+    <string name="home_live">Live</string>
+
 </resources>

@@ -11,6 +11,7 @@ http://ziti2.com/bizhi/content/public_time_line.php?channel=2&count=20&device=2&
     public static final String BASE_URL = "http://ziti2.com/bizhi/content/";
     public static final String BASE_SEARCH_URL = "http://pic.sogou.com/";
     public static final String BASE_VIDEO_URL = "https://dydog.sinaapp.com/";
+    public static final String BASE_LIVE_VIDEO_URL = "http://api.hclyz.com:81/";
 
 
     public static final String KEY_PHOTO_PAGER_CATEGORY_ID = "KEY_PHOTO_PAGER_CATEGORY_ID";
@@ -21,6 +22,8 @@ http://ziti2.com/bizhi/content/public_time_line.php?channel=2&count=20&device=2&
     public static final String KEY_FEED_BEAN_LIST_POSITION = "KEY_FEED_BEAN_LIST_INDEX";
     public static final String KEY_FEED_BEAN_LIST_CATEGORY_ID = "KEY_FEED_BEAN_LIST_CATEGORY_ID";
     public static final String KEY_FEED_BEAN_LIST_KEYBOARD = "KEY_FEED_BEAN_LIST_KEYBOARD";
+
+    public static final String KEY_Live_PAGER_CATEGORY_URL = "KEY_Live_PAGER_CATEGORY_URL";
 
 
     public static final String KEY_AD_VIEW_ID = "ca-app-pub-3940256099942544/6300978111";

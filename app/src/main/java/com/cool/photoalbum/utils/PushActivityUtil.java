@@ -13,11 +13,13 @@ import com.cool.photoalbum.presenter.ISearchPresenter;
 import com.cool.photoalbum.presenter.IVideoListPresenter;
 import com.cool.photoalbum.ui.activity.BrowseActivity;
 import com.cool.photoalbum.ui.activity.DownloadActivity;
+import com.cool.photoalbum.ui.activity.LiveAnchorListActivity;
 import com.cool.photoalbum.ui.activity.PhotoListActivity;
 import com.cool.photoalbum.ui.activity.VideoPlayerActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class PushActivityUtil {
 
@@ -88,6 +90,15 @@ public class PushActivityUtil {
         Intent intent = new Intent(context, VideoPlayerActivity.class);
         intent.putExtra(Constants.KEY_FEED_BEAN_LIST_POSITION,index);
         intent.putParcelableArrayListExtra(Constants.KEY_FEED_BEAN_LIST, (ArrayList<? extends Parcelable>) videoLists);
+        context.startActivity(intent);
+    }
+
+    public static void toLiveListActivity(Context context,Category category){
+        int categoryId = category.getChannel();
+        Intent intent = new Intent(context, LiveAnchorListActivity.class);
+        intent.putExtra(Constants.KEY_PHOTO_PAGER_CATEGORY_ID,categoryId);
+        intent.putExtra(Constants.KEY_PHOTO_PAGER_CATEGORY_NAME,category.getTitle());
+        intent.putExtra(Constants.KEY_Live_PAGER_CATEGORY_URL, category.getUrl());
         context.startActivity(intent);
     }
 }

@@ -7,6 +7,7 @@ public class Category implements SectionEntity {
     String title;
     int img;
     int channel;
+    String url;
     boolean isHeader;
 
     public int getChannel() {
@@ -37,10 +38,19 @@ public class Category implements SectionEntity {
         this.title = title;
         this.img = img;
         this.channel = channel;
+        this.url = url;
     }
 
     public void setHeader(boolean header) {
         isHeader = header;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     @Override

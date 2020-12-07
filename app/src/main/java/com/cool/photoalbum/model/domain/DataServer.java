@@ -16,7 +16,7 @@ public class DataServer {
         List<Category> list = new ArrayList<>();
 
         if (AppAccessRequest.getInstall().isOpen()){
-            Category category1 = new Category(BaseApplication.getAppContext().getString(R.string.Beauty_car_model), R.mipmap.category_girl1,2);
+            Category category1 = new Category(BaseApplication.getAppContext().getString(R.string.Beauty_car_model), R.mipmap.category_girl,2);
             list.add(0,category1);
         }
 

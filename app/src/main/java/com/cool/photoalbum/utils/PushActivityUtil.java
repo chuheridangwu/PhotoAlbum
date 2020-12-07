@@ -90,6 +90,7 @@ public class PushActivityUtil {
         Intent intent = new Intent(context, VideoPlayerActivity.class);
         intent.putExtra(Constants.KEY_FEED_BEAN_LIST_POSITION,index);
         intent.putParcelableArrayListExtra(Constants.KEY_FEED_BEAN_LIST, (ArrayList<? extends Parcelable>) videoLists);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 

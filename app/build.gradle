@@ -16,12 +16,36 @@ android {
         }
     }
 
-    buildTypes {
+
+    signingConfigs {
+        debug {
+            storeFile file("../photoalbum.keystore")
+            storePassword "photoalbum123"
+            keyAlias "photoalbumalias"
+            keyPassword "photoalbum123"
+        }
         release {
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            storeFile file("../photoalbum.keystore")
+            storePassword "photoalbum123"
+            keyAlias "photoalbumalias"
+            keyPassword "photoalbum123"
         }
     }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        debug{
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
 
     compileOptions {//就算您使用 AndroidStudio v3.0, 也需要配置以下参数
         targetCompatibility JavaVersion.VERSION_1_8

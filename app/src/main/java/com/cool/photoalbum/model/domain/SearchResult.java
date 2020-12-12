@@ -1077,7 +1077,7 @@ public class SearchResult {
             dest.writeString(this.ldata);
             dest.writeString(this.uri);
             dest.writeList(this.simdata);
-            dest.writeBoolean(this.isHeader);
+            dest.writeByte(this.isHeader ? (byte) 1 : (byte) 0);
         }
 
         public ItemsBean() {
@@ -1158,7 +1158,7 @@ public class SearchResult {
             this.uri = in.readString();
             this.simdata = new ArrayList<List<String>>();
             in.readList(this.simdata, String.class.getClassLoader());
-            this.isHeader = in.readBoolean();
+            this.isHeader = in.readByte() != 0;
         }
 
         public static final Creator<ItemsBean> CREATOR = new Creator<ItemsBean>() {

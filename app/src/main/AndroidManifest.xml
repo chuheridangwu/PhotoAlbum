@@ -20,7 +20,7 @@
         android:theme="@style/AppTheme">
 
         <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-8177181808824082~3321123758"></meta-data>
+            android:value="ca-app-pub-8177181808824082~3321123759"></meta-data>
 
         <activity  android:name=".ui.activity.SplashActivity"
             android:theme="@style/SplashTheme"

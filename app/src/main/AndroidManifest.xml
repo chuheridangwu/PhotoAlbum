@@ -3,8 +3,13 @@
     package="com.cool.photoalbum">
 
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+
 
     <application
+        android:requestLegacyExternalStorage="true"
         android:usesCleartextTraffic="true"
         android:name=".base.BaseApplication"
         android:allowBackup="true"
@@ -13,13 +18,32 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.MainActivity">
+
+        <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-8177181808824082~3321123759"></meta-data>
+
+        <activity  android:name=".ui.activity.SplashActivity"
+            android:theme="@style/SplashTheme"
+            >
+            <!--  适配华为刘海屏 -->
+            <meta-data
+                android:name="android.notch_support"
+                android:value="true" />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.activity.MainActivity">
+        </activity>
+        <activity android:name=".ui.activity.PhotoListActivity"></activity>
+        <activity
+            android:name=".ui.activity.BrowseActivity"></activity>
+        <activity android:name=".ui.activity.DownloadActivity"></activity>
+        <activity android:name=".ui.activity.VideoPlayerActivity"></activity>
+        <activity android:name=".ui.activity.LiveAnchorListActivity"></activity>
     </application>
 
 </manifest>

@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.cool.photoalbum.R;
+import com.google.android.gms.ads.AdRequest;
 
 public abstract class BaseFragment extends Fragment {
 

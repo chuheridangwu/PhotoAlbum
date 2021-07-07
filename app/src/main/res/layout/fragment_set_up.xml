@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="match_parent"
+    xmlns:sob="http://schemas.android.com/apk/res-auto"
+    android:background="#e6e6e6"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:background="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/include_nav_state_title_view"></include>
+
+        <View style="@style/FullMarginView"></View>
+
+        <com.cool.photoalbum.ui.custom.SectionRowView
+            android:id="@+id/set_up_look_download"
+            sob:title="@string/look_download_photo"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"></com.cool.photoalbum.ui.custom.SectionRowView>
+
+        <View style="@style/FullMarginView"></View>
+
+<!--        <com.cool.photoalbum.ui.custom.SectionRowView-->
+<!--            android:id="@+id/set_up_look_ad"-->
+<!--            sob:title="@string/watch_ad"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="40dp"></com.cool.photoalbum.ui.custom.SectionRowView>-->
+
+<!--        <View style="@style/FullMarginView"></View>-->
+
+        <com.cool.photoalbum.ui.custom.SectionRowView
+            android:id="@+id/set_up_clear_cache"
+            sob:title="@string/clear_cache"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"></com.cool.photoalbum.ui.custom.SectionRowView>
+
+        <View style="@style/FullMarginView"></View>
+
+        <com.cool.photoalbum.ui.custom.SectionRowView
+            android:id="@+id/set_up_about_me"
+            sob:title="@string/about_us"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"></com.cool.photoalbum.ui.custom.SectionRowView>
+
+    </LinearLayout>
+
+</ScrollView>
+
+
+

@@ -1,10 +1,53 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.FullScreen">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="SplashTheme" parent="AppTheme.FullScreen">
+
+    </style>
+
+    <!--整个应用中用于对象在屏幕边缘的左右边距-->
+    <dimen name="left_right_margin">15dp</dimen>
+    <dimen name="room_bottom">10dp</dimen>
+    <dimen name="user_information">10dp</dimen>
+    <dimen name="click_item_height">50dp</dimen>
+    <dimen name="setting_margin_bottom">1dp</dimen>
+    <dimen name="setting_item_margin_top">25dp</dimen>
+    <dimen name="logout_margin_top">50dp</dimen>
+
+
+    <!--应用中大文本基类-->
+    <style name="BigTextAppearance">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/left_right_margin</item>
+    </style>
+
+    <!--完整线样式-->
+    <style name="FullMarginView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">10dp</item>
+        <item name="android:background">#e6e6e6</item>
+    </style>
+
+    <!--应用中可点击的item左边对象文字样式，如个人页-->
+    <style name="BigTextAppearance.ItemLeft">
+        <item name="android:textSize">15sp</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginLeft">0dp</item>
+        <item name="android:paddingLeft">@dimen/left_right_margin</item>
     </style>
 
 </resources>
